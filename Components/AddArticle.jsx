@@ -145,7 +145,7 @@ export default function Add({close}) {
 
             </Box>
             <Box sx={{margin: 1, boxShadow: 1}}>
-                <Button variant={"contained"} onClick={onSubmit}>Enregistrer</Button>
+                <Button variant={"contained"} onClick={onSubmit}>Enregistrer Test</Button>
             </Box>
         </Box>
 
