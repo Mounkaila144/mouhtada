@@ -14,6 +14,7 @@ import Button from "@mui/material/Button";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import Image from "next/image";
 import EditIcon from "@mui/icons-material/Edit";
+import {useRouter} from "next/router";
 
 const FormData = require('form-data');
 
@@ -24,6 +25,10 @@ export default function Add({close}) {
     const [stock, createStock] = useState(5)
     const [vendue, createVendue] = useState(6)
     const [image, createimage] = useState([])
+    const router=useRouter();
+    const refreshData=()=>{
+        router.replace(router.asPath)
+    }
 
     const getImage = (image) => {
         // 👇️ take parameter passed from Child component
@@ -44,6 +49,9 @@ export default function Add({close}) {
             const res = await axios.post('https://mouhtada.allcine227.com/api/articles', formData, {
                 headers: {'Content-Type': 'multipart/form-data'}
             });
+            if (res.status===200){
+                refreshData();
+            }
             console.log(res.data)
         } catch (e) {
             alert(e)
