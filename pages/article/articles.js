@@ -5,6 +5,7 @@ import {Backdrop, CircularProgress} from "@mui/material";
 import {grey} from "@mui/material/colors";
 import {alpha} from "@mui/material/styles";
 import axios from "axios";
+import fetch from "node-fetch";
 
 export default function Home({articles}) {
     const [parentSize, setParentSize] = useState(0);
