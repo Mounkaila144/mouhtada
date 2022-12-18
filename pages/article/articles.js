@@ -20,7 +20,16 @@ export default function Home({articles}) {
         );
 
 }
-export async function getServerSideProps() {
+// export async function getServerSideProps() {
+//     const res = await fetch('https://mouhtada.allcine227.com/api/articles');
+//     const articles=await res.json();
+//
+//     return {
+//         props: {articles},
+//     }
+//
+// }
+export async function getStaticProps() {
     const res = await fetch('https://mouhtada.allcine227.com/api/articles');
     const articles=await res.json();
 
