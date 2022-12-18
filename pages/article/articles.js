@@ -12,22 +12,12 @@ export default function Home({articles}) {
     const [isLoaded, setIsLoaded] = useState(false);
     const [article, setArticle] = useState([]);
 
-
-    if (error) {
-        return <div>Error: {error.message}</div>;
-    } else if (!isLoaded) {
-        return(
-
-            <Backdrop open={true} sx={{backgroundColor: alpha(grey[300], 5)}}>
-                <CircularProgress size="30vh" sx={{color:"black"}} disableShrink />
-            </Backdrop>);
-    } else {
         return (
 
             <EnhancedTable rows={articles}/>
 
         );
-    }
+
 }
 export async function getStaticProps() {
     const res = await fetch('https://mouhtada.allcine227.com/api/articles');
