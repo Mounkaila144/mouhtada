@@ -6,28 +6,12 @@ import {grey} from "@mui/material/colors";
 import {alpha} from "@mui/material/styles";
 import axios from "axios";
 
-export default function Home() {
+export default function Home({articles}) {
     const [parentSize, setParentSize] = useState(0);
     const [error, setError] = useState(null);
     const [isLoaded, setIsLoaded] = useState(false);
     const [article, setArticle] = useState([]);
 
-    useEffect(() => {
-        axios({
-            method: 'get',
-            url: 'https://mouhtada.allcine227.com/api/articles',
-        })
-            .then(
-                (data) => {
-                    setIsLoaded(true);
-                    setArticle(data['data']);
-                },
-                (error) => {
-                    setIsLoaded(true);
-                    setError(error);
-                }
-            )
-    }, [])
 
     if (error) {
         return <div>Error: {error.message}</div>;
@@ -40,8 +24,16 @@ export default function Home() {
     } else {
         return (
 
-            <EnhancedTable rows={article}/>
+            <EnhancedTable rows={articles}/>
 
         );
+    }
+}
+export async function getStaticProps() {
+    const res = await fetch('https://mouhtada.allcine227.com/api/articles');
+    const articles=await res.json();
+
+    return {
+        props: {articles}, // will be passed to the page component as props
     }
 }
