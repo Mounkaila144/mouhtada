@@ -5,7 +5,6 @@ import {Backdrop, CircularProgress} from "@mui/material";
 import {grey} from "@mui/material/colors";
 import {alpha} from "@mui/material/styles";
 import axios from "axios";
-import fetch from "node-fetch";
 
 export default function Home({articles}) {
     const [parentSize, setParentSize] = useState(0);
@@ -20,7 +19,7 @@ export default function Home({articles}) {
         );
 
 }
-export async function getStaticProps() {
+export async function getServerSideProps() {
     const res = await fetch('https://mouhtada.allcine227.com/api/articles');
     const articles=await res.json();
 
