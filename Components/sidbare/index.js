@@ -84,7 +84,7 @@ export default function Sidbare({content}) {
                     }}>
                     <ListItem key={1} disablePadding sx={{ display: 'block' }}>
                         <ButtonSide text={"Dashboard"} open={open} icon={<DashboardIcon/>} link={"/"}/>
-                        <ButtonSide text={"Articles"} open={open} icon={<DashboardIcon/>} link={"/article/articles"}/>
+                        <ButtonSide text={"Articles"} open={open} icon={<DashboardIcon/>} link={"/articles/articles"}/>
                         <ButtonSide text={"Dashboard"} open={open} icon={<DashboardIcon/>} link={"/"}/>
                     </ListItem>
                 </List>

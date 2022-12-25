@@ -28,6 +28,8 @@ import Button from "@mui/material/Button";
 import {Card} from "@mui/material";
 import {blue} from "@mui/material/colors";
 import Add from "../AddArticle";
+import ArticleDialog from "../Dialog";
+import {useRouter} from "next/router";
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -44,7 +46,6 @@ function getComparator(order, orderBy) {
         ? (a, b) => descendingComparator(a, b, orderBy)
         : (a, b) => -descendingComparator(a, b, orderBy);
 }
-
 // This method is created for cross-browser compatibility, if you don't
 // need to support IE11, you can use Array.prototype.sort() directly
 function stableSort(array, comparator) {
@@ -128,7 +129,7 @@ function EnhancedTableHead(props) {
                     >
                         <TableSortLabel
                             active={orderBy === headCell.id}
-                            direction={orderBy === headCell.id ? order : 'asc'}
+                            direction={orderBy === headCell.id ? order : 'desc'}
                             onClick={createSortHandler(headCell.id)}
                         >
                             {headCell.label}
@@ -149,12 +150,13 @@ EnhancedTableHead.propTypes = {
     numSelected: PropTypes.number.isRequired,
     onRequestSort: PropTypes.func.isRequired,
     onSelectAllClick: PropTypes.func.isRequired,
-    order: PropTypes.oneOf(['asc', 'desc']).isRequired,
+    order: PropTypes.oneOf(['desc', 'desc']).isRequired,
     orderBy: PropTypes.string.isRequired,
     rowCount: PropTypes.number.isRequired,
 };
 
 function EnhancedTableToolbar(props) {
+
     const { numSelected } = props;
 
     return (
@@ -175,7 +177,7 @@ function EnhancedTableToolbar(props) {
                     variant="subtitle1"
                     component="div"
                 >
-                    {numSelected} selected
+                    {numSelected} selectionner
                 </Typography>
             ) : (
                 <Typography
@@ -184,18 +186,18 @@ function EnhancedTableToolbar(props) {
                     id="tableTitle"
                     component="div"
                 >
-                    Nutrition
+                    Meubles
                 </Typography>
             )}
 
             {numSelected > 0 ? (
-                <Tooltip title="Delete">
+                <Tooltip title="Suprimer">
                     <IconButton>
                         <DeleteIcon />
                     </IconButton>
                 </Tooltip>
             ) : (
-                <Tooltip title="Filter list">
+                <Tooltip title="Filtre list">
                     <IconButton>
                         <FilterListIcon />
                     </IconButton>
@@ -209,29 +211,32 @@ EnhancedTableToolbar.propTypes = {
     numSelected: PropTypes.number.isRequired,
 };
 export default function EnhancedTable({rows}) {
-    const [order, setOrder] = React.useState('asc');
+    const router = useRouter()
+
+    const [order, setOrder] = React.useState('desc');
     const [open, setOpen] = React.useState(false);
-    const [orderBy, setOrderBy] = React.useState('calories');
+    const [orderBy, setOrderBy] = React.useState('id');
     const [selected, setSelected] = React.useState([]);
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
 
     const handleRequestSort = (event, property) => {
-        const isAsc = orderBy === property && order === 'asc';
-        setOrder(isAsc ? 'desc' : 'asc');
+        const isAsc = orderBy === property && order === 'desc';
+        setOrder(isAsc ? 'desc' : 'desc');
         setOrderBy(property);
     };
 
     const handleSelectAllClick = (event) => {
         if (event.target.checked) {
-            const newSelected = rows.map((n) => n.name);
+            const newSelected = rows.map((n) => n.id);
             setSelected(newSelected);
             return;
         }
         setSelected([]);
-    };
+        console.log(selected)
 
+    };
     const handleClick = (event, name) => {
         const selectedIndex = selected.indexOf(name);
         let newSelected = [];
@@ -279,13 +284,7 @@ export default function EnhancedTable({rows}) {
             <Paper sx={{ width: '100%', mb: 2 }}>
                 <EnhancedTableToolbar numSelected={selected.length} />
                 <TableContainer>
-                    {!open?<Button variant="contained" startIcon={<AddCircleIcon/>}
-                    onClick={()=>{open?setOpen(false):setOpen(true)}}
-                    >
-                        Ajouter nouveau
-                    </Button>
-                        :<Add close={()=>closeAdd()}/>
-                    }
+                   <ArticleDialog/>
 
                     <Table
                         sx={{ minWidth: 950 }}
@@ -306,13 +305,14 @@ export default function EnhancedTable({rows}) {
                             {stableSort(rows, getComparator(order, orderBy))
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row, index) => {
-                                    const isItemSelected = isSelected(row.nom);
+                                    const isItemSelected = isSelected(row.id);
                                     const labelId = `enhanced-table-checkbox-${index}`;
 
                                     return (
                                         <TableRow
                                             hover
-                                            onClick={(event) => handleClick(event, row.nom)}
+                                            onClick={(event) => handleClick(event, row.id)}
+                                            onDoubleClick={()=>router.push("/articles/"+row.id)}
                                             role="checkbox"
                                             aria-checked={isItemSelected}
                                             tabIndex={-1}
@@ -332,7 +332,7 @@ export default function EnhancedTable({rows}) {
                                                 align="right"
                                             >
                                                 <Image
-                                                    src={`https://mouhtada.allcine227.com/${row.image}`}
+                                                    src={`http://127.0.0.1:8000/storage/Article/${row.image}`}
                                                     width={70} height={70}
                                                 />
                                             </TableCell>

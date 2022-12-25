@@ -46,7 +46,7 @@ export default function Add({close}) {
         formData.append('vendue', vendue);
         formData.append('image', image);
         try {
-            const res = await axios.post('https://mouhtada.allcine227.com/api/articles', formData, {
+            const res = await axios.post('http://127.0.0.1:8000/api/articles', formData, {
                 headers: {'Content-Type': 'multipart/form-data'}
             });
             if (res.status===200){
@@ -59,11 +59,10 @@ export default function Add({close}) {
 
     }
     return (
-        <Box sx={{margin: 1, boxShadow: 3}}>
-            <Box sx={{margin: 1, boxShadow: 3}}>
+        <Box>
+            <Box sx={{margin: 1, boxShadow: 3,borderRadius:3}}>
 
 
-                <IconClose action={close}/>
                 <UploadImage image={getImage}/>
                 <FormControl sx={{m: 1, width: '25ch'}} variant="outlined">
                     <FormHelperText id="nom">
@@ -152,8 +151,8 @@ export default function Add({close}) {
                 </FormControl>
 
             </Box>
-            <Box sx={{margin: 1, boxShadow: 1}}>
-                <Button variant={"contained"} onClick={onSubmit}>Enregistrer Test</Button>
+            <Box textAlign='center'>
+                <Button variant={"contained"} onClick={onSubmit}>Enregistrer</Button>
             </Box>
         </Box>
 

@@ -10,11 +10,10 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import EditIcon from '@mui/icons-material/Edit';
 
 export function UploadImage({image}) {
-    const [images, setImages] = React.useState([]);
+    const [images, setImages] = React.useState(null);
     const [open, setOpen] = React.useState(false);
     const onChange = (imageList, addUpdateIndex) => {
         // data for submit
-        console.log(imageList, addUpdateIndex);
         setImages(imageList);
         image(imageList[0].file)
     };
@@ -28,7 +27,7 @@ export function UploadImage({image}) {
                 onChange={onChange}
                 maxNumber={1}
                 dataURLKey="data_url"
-                acceptType={["jpg"]}
+                acceptType={["jpg","png"]}
             >
                 {({
                       imageList,
@@ -58,7 +57,6 @@ export function UploadImage({image}) {
                         &nbsp;
                         {imageList.map((image, index) => (
                             <Box sx={{ margin:1,boxShadow:3}}>
-                                <IconClose action={() => onImageRemove(index)}/>
                                 <Image src={image.data_url} width={185} height={160} />
                                 <div className="image-item__btn-wrapper">
                                     <Button startIcon={<EditIcon/>} sx={{height:25,width:100}} variant="contained" onClick={() => onImageUpdate(index)}>Modifier</Button>
