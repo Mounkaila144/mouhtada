@@ -15,6 +15,7 @@ import AddCircleIcon from "@mui/icons-material/AddCircle";
 import Image from "next/image";
 import EditIcon from "@mui/icons-material/Edit";
 import {useRouter} from "next/router";
+import url from "./global";
 
 const FormData = require('form-data');
 
@@ -46,7 +47,7 @@ export default function Add({close}) {
         formData.append('vendue', vendue);
         formData.append('image', image);
         try {
-            const res = await axios.post('https://mouhtada.allcine227.com/api/articles', formData, {
+            const res = await axios.post(url+'/api/articles', formData, {
                 headers: {'Content-Type': 'multipart/form-data'}
             });
             if (res.status===200){

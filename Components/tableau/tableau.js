@@ -30,6 +30,8 @@ import {blue} from "@mui/material/colors";
 import Add from "../AddArticle";
 import ArticleDialog from "../Dialog";
 import {useRouter} from "next/router";
+import url from "../global";
+import axios from "axios";
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -156,28 +158,38 @@ EnhancedTableHead.propTypes = {
 };
 
 function EnhancedTableToolbar(props) {
-
+    const router=useRouter();
+    const refreshData=()=>{
+        router.replace(router.asPath)
+    }
     const { numSelected } = props;
-
+    var data=Object.values(numSelected);
+    console.log(data)
+    const removeSelect = async () => {
+        const res = await axios.post(url + '/api/articles/remove', {"data":data});
+        if(res.status){
+            refreshData();
+        }
+    };
     return (
         <Toolbar
             sx={{
                 pl: { sm: 2 },
                 pr: { xs: 1, sm: 1 },
-                ...(numSelected > 0 && {
+                ...(numSelected.length > 0 && {
                     bgcolor: (theme) =>
                         alpha(theme.palette.primary.main, theme.palette.action.activatedOpacity),
                 }),
             }}
         >
-            {numSelected > 0 ? (
+            {numSelected.length > 0 ? (
                 <Typography
                     sx={{ flex: '1 1 100%' }}
                     color="inherit"
                     variant="subtitle1"
                     component="div"
                 >
-                    {numSelected} selectionner
+                    {numSelected.length} selectionner
                 </Typography>
             ) : (
                 <Typography
@@ -190,9 +202,9 @@ function EnhancedTableToolbar(props) {
                 </Typography>
             )}
 
-            {numSelected > 0 ? (
+            {numSelected.length > 0 ? (
                 <Tooltip title="Suprimer">
-                    <IconButton>
+                    <IconButton onClick={()=>removeSelect()}>
                         <DeleteIcon />
                     </IconButton>
                 </Tooltip>
@@ -227,6 +239,7 @@ export default function EnhancedTable({rows}) {
         setOrderBy(property);
     };
 
+
     const handleSelectAllClick = (event) => {
         if (event.target.checked) {
             const newSelected = rows.map((n) => n.id);
@@ -234,7 +247,6 @@ export default function EnhancedTable({rows}) {
             return;
         }
         setSelected([]);
-        console.log(selected)
 
     };
     const handleClick = (event, name) => {
@@ -282,7 +294,7 @@ export default function EnhancedTable({rows}) {
     return (
         <Box sx={{margin:1,boxShadow:2 }}>
             <Paper sx={{ width: '100%', mb: 2 }}>
-                <EnhancedTableToolbar numSelected={selected.length} />
+                <EnhancedTableToolbar numSelected={selected} />
                 <TableContainer>
                    <ArticleDialog/>
 
@@ -332,7 +344,7 @@ export default function EnhancedTable({rows}) {
                                                 align="right"
                                             >
                                                 <Image
-                                                    src={`https://mouhtada.allcine227.com/storage/Article/${row.image}`}
+                                                    src={url+`/storage/Article/${row.image}`}
                                                     width={70} height={70}
                                                 />
                                             </TableCell>

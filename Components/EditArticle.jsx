@@ -16,6 +16,7 @@ import Image from "next/image";
 import EditIcon from "@mui/icons-material/Edit";
 import {useRouter} from "next/router";
 import {Alert, AlertTitle, Backdrop, CircularProgress} from "@mui/material";
+import url from "./global";
 
 const FormData = require('form-data');
 
@@ -60,7 +61,7 @@ export default function Edit({close,article}) {
         vendue===null?null:formData.append('vendue', vendue);
         image===[]?null:formData.append('image', image);
         try {
-            const res = await axios.post('https://mouhtada.allcine227.com/api/articles/'+article.id+"?_method=PUT", formData, {
+            const res = await axios.post(url+'/api/articles/'+article.id+"?_method=PUT", formData, {
                 headers: {'Content-Type': 'multipart/form-data'}
             }).then(
             ).finally(()=>setLoading(false));

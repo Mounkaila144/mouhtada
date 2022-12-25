@@ -7,8 +7,8 @@ module.exports = {
   images: {
     remotePatterns: [
       {
-        protocol: 'https',
-        hostname: 'mouhtada.allcine227.com',
+        protocol: 'http',
+        hostname: '127.0.0.1',
         pathname: '/storage/**',
       },
     ],

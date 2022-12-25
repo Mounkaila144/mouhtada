@@ -12,6 +12,7 @@ import ArticleDialog from "../../Components/Dialog";
 import Edit from "../../Components/EditArticle";
 import {Backdrop, CircularProgress} from "@mui/material";
 import {useState} from "react";
+import url from "../../Components/global";
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
@@ -64,7 +65,7 @@ export default function Article(props) {
 
 // Generates `/posts/1` and `/posts/2`
 export async function getStaticPaths() {
-    const res = await fetch('https://mouhtada.allcine227.com/api/articles');
+    const res = await fetch(url+'/api/articles');
     const articles=await res.json();
     const paths=await articles.map(a=>({params:{id:a.id.toString()}}))
     return {
@@ -75,9 +76,9 @@ export async function getStaticPaths() {
 
 export async function getStaticProps(context) {
     const id = context.params.id;
-    const res = await fetch('https://mouhtada.allcine227.com/api/articles/'+id);
+    const res = await fetch(url+'/api/articles/'+id);
     const article=await res.json();
-    const rest = await fetch('https://mouhtada.allcine227.com/api/articles');
+    const rest = await fetch(url+'/api/articles');
     const articles=await rest.json();
     return {
         // Passed to the page component as props
