@@ -21,7 +21,7 @@ export default function Home({articles}) {
 
 }
 // export async function getServerSideProps() {
-//     const res = await fetch('http://127.0.0.1:8000/api/articles');
+//     const res = await fetch('https://mouhtada.allcine227.com/api/articles');
 //     const articles=await res.json();
 //
 //     return {
@@ -30,7 +30,7 @@ export default function Home({articles}) {
 //
 // }
 export async function getStaticProps() {
-    const res = await fetch('http://127.0.0.1:8000/api/articles');
+    const res = await fetch('https://mouhtada.allcine227.com/api/articles');
     const articles=await res.json();
 
     return {

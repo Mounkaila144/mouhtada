@@ -60,7 +60,7 @@ export default function Edit({close,article}) {
         vendue===null?null:formData.append('vendue', vendue);
         image===[]?null:formData.append('image', image);
         try {
-            const res = await axios.post('http://127.0.0.1:8000/api/articles/'+article.id+"?_method=PUT", formData, {
+            const res = await axios.post('https://mouhtada.allcine227.com/api/articles/'+article.id+"?_method=PUT", formData, {
                 headers: {'Content-Type': 'multipart/form-data'}
             }).then(
             ).finally(()=>setLoading(false));
