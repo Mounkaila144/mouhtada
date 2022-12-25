@@ -20,23 +20,23 @@ export default function Home({articles}) {
         );
 
 }
-// export async function getServerSideProps() {
-//     const res = await fetch('https://mouhtada.allcine227.com/api/articles');
-//     const articles=await res.json();
-//
-//     return {
-//         props: {articles},
-//     }
-//
-// }
-export async function getStaticProps() {
+export async function getServerSideProps() {
     const res = await fetch('https://mouhtada.allcine227.com/api/articles');
     const articles=await res.json();
 
     return {
         props: {articles},
-        revalidate: 10,// will be passed to the page component as props
     }
 
 }
+// export async function getStaticProps() {
+//     const res = await fetch('https://mouhtada.allcine227.com/api/articles');
+//     const articles=await res.json();
+//
+//     return {
+//         props: {articles},
+//         revalidate: 10,// will be passed to the page component as props
+//     }
+//
+// }
 
