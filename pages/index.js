@@ -5,7 +5,7 @@ export default function Page() {
 
     return (
         <button type="button" onClick={() => router.push('/about')}>
-            OHH
+            Bonjour
         </button>
     )
 }
