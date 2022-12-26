@@ -31,6 +31,7 @@ export default function ArticleDialog() {
                 Ajouter
             </Button>
             <Dialog
+
                 open={open}
                 TransitionComponent={Transition}
                 keepMounted
@@ -38,7 +39,7 @@ export default function ArticleDialog() {
                 aria-describedby="alert-dialog-slide-description"
             >
                 <DialogTitle>{"Ajouter un nouveau meuble"}</DialogTitle>
-                <DialogContent>
+                <DialogContent >
                     <Add/>
                 </DialogContent>
                 {/*<DialogActions>*/}
