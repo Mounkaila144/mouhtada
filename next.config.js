@@ -9,7 +9,6 @@ module.exports = {
       {
         protocol: 'https',
         hostname: 'mouhtada.allcine227.com',
-        pathname: '/storage/**',
       },
     ],
   },
