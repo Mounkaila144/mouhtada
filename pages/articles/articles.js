@@ -1,12 +1,6 @@
 import styles from '../../styles/Home.module.css';
 import React, {useState, useEffect} from 'react';
 import EnhancedTable from "../../Components/tableau/tableau";
-import {Backdrop, CircularProgress} from "@mui/material";
-import {grey} from "@mui/material/colors";
-import {alpha} from "@mui/material/styles";
-import axios from "axios";
-import fetch from "node-fetch";
-import url from "../../Components/global";
 
 export default function Home({articles}) {
     const [parentSize, setParentSize] = useState(0);
@@ -22,7 +16,7 @@ export default function Home({articles}) {
 
 }
 export async function getServerSideProps() {
-    const res = await fetch(url+'/api/articles');
+    const res = await fetch('https:mouhtada.allcine227.com/api/articles');
     const articles=await res.json();
 
     return {
