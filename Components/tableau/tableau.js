@@ -343,8 +343,8 @@ export default function EnhancedTable({rows}) {
                                             <TableCell
                                                 align="right"
                                             >
-                                                <Image
-                                                    src={`https://https://mouhtada.allcine227.com/storage/meuble/${row.image}`}
+                                                <img
+                                                    src={`https://mouhtada.allcine227.com/storage/meuble/${row.image}`}
                                                     width={70} height={70}
                                                  alt={"image"}/>
                                             </TableCell>
