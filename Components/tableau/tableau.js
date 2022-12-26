@@ -344,7 +344,7 @@ export default function EnhancedTable({rows}) {
                                                 align="right"
                                             >
                                                 <Image
-                                                    src={url+`/storage/Article/${row.image}`}
+                                                    src={url+`/storage/meuble/${row.image}`}
                                                     width={70} height={70}
                                                 />
                                             </TableCell>
