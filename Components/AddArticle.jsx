@@ -47,7 +47,7 @@ export default function Add({close}) {
         formData.append('vendue', vendue);
         formData.append('image', image);
         try {
-            const res = await axios.post(url+'/api/articles', formData, {
+            const res = await axios.post('https:mouhtada.allcine227.com/api/articles', formData, {
                 headers: {'Content-Type': 'multipart/form-data'}
             });
             if (res.status===200){
