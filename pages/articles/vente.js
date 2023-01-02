@@ -171,7 +171,7 @@ export default function Vente({articles}) {
                                                 sx={{'&:last-child td, &:last-child th': {border: 0}}}
                                             >
                                                 <TableCell> <Image
-                                                    src={url + "/storage/article/" + articles.image}
+                                                    src={url + "/storage/meuble/" + articles.image}
                                                     width={50} height={50} style={{borderRadius: 8}}
                                                     alt={"image"}/></TableCell>
                                                 <TableCell component="th" scope="articles">
