@@ -119,171 +119,183 @@ export default function Article(props) {
                 <Circular/>
             )
         } else {
-            return (
-                <>
-                    <Home articles={props.articles}/>
-                    <Dialog
-                        open={open}
-                        TransitionComponent={Transition}
-                        keepMounted
-                        onClose={handleClose}
-                        aria-describedby="alert-dialog-slide-description"
+            if (router.isFallback) {
+                return (
+                    <Backdrop
+                        sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}}
+                        open={true}
                     >
-                        <DialogTitle>{"Operation"}</DialogTitle>
-                        {show?
-                        <DialogContent>
-                            <Alert severity="success">
-                        <AlertTitle>Success</AlertTitle>
-                        L'operation <strong>a bien été prise en compte!</strong>
-                          </Alert>
-                        </DialogContent>:
-                        <DialogContent>
-                            <Stack spacing={3} direction="row"
-                                   sx={{marginLeft: 7, marginTop: 0}}>
-                                <Button variant={"contained"}
-                                        sx={{
-                                            backgroundColor: yellow[800],
-                                            borderRadius: 3,
-                                            ':hover': {bgcolor: blueGrey[900]}
-                                        }}
-                                        onClick={() => setBtn("remove")}><RemoveCircleIcon
-                                    sx={{color: "white"}}/>Dimunier stock
-                                </Button>
+                        <CircularProgress color="inherit"/>
+                    </Backdrop>
+                )
+            }
+            else {
+                return (
+                    <>
+                        <Home articles={props.articles}/>
+                        <Dialog
+                            open={open}
+                            TransitionComponent={Transition}
+                            keepMounted
+                            onClose={handleClose}
+                            aria-describedby="alert-dialog-slide-description"
+                        >
+                            <DialogTitle>{"Operation"}</DialogTitle>
+                            {show ?
+                                <DialogContent>
+                                    <Alert severity="success">
+                                        <AlertTitle>Success</AlertTitle>
+                                        L'operation <strong>a bien été prise en compte!</strong>
+                                    </Alert>
+                                </DialogContent> :
+                                <DialogContent>
+                                    <Stack spacing={3} direction="row"
+                                           sx={{marginLeft: 7, marginTop: 0}}>
+                                        <Button variant={"contained"}
+                                                sx={{
+                                                    backgroundColor: yellow[800],
+                                                    borderRadius: 3,
+                                                    ':hover': {bgcolor: blueGrey[900]}
+                                                }}
+                                                onClick={() => setBtn("remove")}><RemoveCircleIcon
+                                            sx={{color: "white"}}/>Dimunier stock
+                                        </Button>
 
-                                <Button variant={"contained"}
-                                        sx={{borderRadius: 3, ':hover': {bgcolor: blueGrey[900]}}}
-                                        onClick={() => setBtn("add")}><AddCircleIcon
-                                    sx={{color: "white"}}/>Ajouter Stocks</Button>
-                                <Button variant={"contained"}
-                                        sx={{
-                                            backgroundColor: red[800],
-                                            borderRadius: 3,
-                                            ':hover': {bgcolor: blueGrey[900]}
-                                        }}
-                                        onClick={() => setBtn("prix")}><ModeIcon
-                                    style={{maxWidth: '20px', maxHeight: '20px',}}
-                                    sx={{color: "white"}}/>Modifier les prix</Button>
-                            </Stack>
-                            {btn === "add" ? <><FormControl sx={{m: 1, width: '35ch'}} variant="outlined">
-                                <FormHelperText id="Quantité">
-                                    <Typography component="h3" sx={{fontSize: 23}} variant="h5">
-                                        Ajouter une quantité de
-                                    </Typography>
-                                </FormHelperText>
+                                        <Button variant={"contained"}
+                                                sx={{borderRadius: 3, ':hover': {bgcolor: blueGrey[900]}}}
+                                                onClick={() => setBtn("add")}><AddCircleIcon
+                                            sx={{color: "white"}}/>Ajouter Stocks</Button>
+                                        <Button variant={"contained"}
+                                                sx={{
+                                                    backgroundColor: red[800],
+                                                    borderRadius: 3,
+                                                    ':hover': {bgcolor: blueGrey[900]}
+                                                }}
+                                                onClick={() => setBtn("prix")}><ModeIcon
+                                            style={{maxWidth: '20px', maxHeight: '20px',}}
+                                            sx={{color: "white"}}/>Modifier les prix</Button>
+                                    </Stack>
+                                    {btn === "add" ? <><FormControl sx={{m: 1, width: '35ch'}} variant="outlined">
+                                        <FormHelperText id="Quantité">
+                                            <Typography component="h3" sx={{fontSize: 23}} variant="h5">
+                                                Ajouter une quantité de
+                                            </Typography>
+                                        </FormHelperText>
 
-                                <OutlinedInput
-                                    sx={{height: '5ch', boxShadow: 3, borderRadius: 2}}
-                                    id="Quantité"
-                                    onChange={(event) => {
-                                        createAdd(parseInt(event.target.value))
-                                    }}
-                                    aria-describedby="nom"
-                                    inputProps={{
-                                        'type': "number",
-                                        'min': "0",
-                                        'max': "1000",
-                                        'aria-label': 'weight',
-                                    }}
-                                />
-                            </FormControl>
-                                <Button variant={"contained"}
-                                        sx={{marginTop: 6, borderRadius: 3, ':hover': {bgcolor: blueGrey[900]}}}
-                                        onClick={onSubmitAdd}><AddCircleIcon
-                                    sx={{color: "white"}}/>Ajouter
-                                </Button></> : null}
-                            {btn === "remove" ? <> <FormControl sx={{m: 1, width: '35ch'}} variant="outlined">
-                                <FormHelperText id="Quantité">
-                                    <Typography component="h3" sx={{fontSize: 23}} variant="h5">
-                                        Dimunier une quantité de
-                                    </Typography>
-                                </FormHelperText>
+                                        <OutlinedInput
+                                            sx={{height: '5ch', boxShadow: 3, borderRadius: 2}}
+                                            id="Quantité"
+                                            onChange={(event) => {
+                                                createAdd(parseInt(event.target.value))
+                                            }}
+                                            aria-describedby="nom"
+                                            inputProps={{
+                                                'type': "number",
+                                                'min': "0",
+                                                'max': "1000",
+                                                'aria-label': 'weight',
+                                            }}
+                                        />
+                                    </FormControl>
+                                        <Button variant={"contained"}
+                                                sx={{marginTop: 6, borderRadius: 3, ':hover': {bgcolor: blueGrey[900]}}}
+                                                onClick={onSubmitAdd}><AddCircleIcon
+                                            sx={{color: "white"}}/>Ajouter
+                                        </Button></> : null}
+                                    {btn === "remove" ? <> <FormControl sx={{m: 1, width: '35ch'}} variant="outlined">
+                                        <FormHelperText id="Quantité">
+                                            <Typography component="h3" sx={{fontSize: 23}} variant="h5">
+                                                Dimunier une quantité de
+                                            </Typography>
+                                        </FormHelperText>
 
-                                <OutlinedInput
-                                    sx={{height: '5ch', boxShadow: 3, borderRadius: 2}}
-                                    id="Quantité"
-                                    onChange={(event) => {
-                                        createRemove(parseInt(event.target.value))
-                                    }}
-                                    aria-describedby="nom"
-                                    inputProps={{
-                                        'type': "number",
-                                        'min': "0",
-                                        'max': "1000",
-                                        'aria-label': 'weight',
-                                    }}
-                                />
-                            </FormControl>
-                                <Button variant={"contained"}
-                                        sx={{
-                                            backgroundColor: yellow[800],
-                                            marginTop: 6,
-                                            borderRadius: 3,
-                                            ':hover': {bgcolor: blueGrey[900]}
-                                        }}
-                                        onClick={onSubmitRemove}><RemoveCircleIcon
-                                    sx={{color: "white"}}/>Dimunier
-                                </Button></> : null}
-                            {btn === "prix" ? <>
-                                <FormControl sx={{m: 1, width: '35ch'}} variant="outlined">
-                                <FormHelperText id="Quantité">
-                                    <Typography component="h3" sx={{fontSize: 23}} variant="h5">
-                                        Modifier le prix d'achat
-                                    </Typography>
-                                </FormHelperText>
+                                        <OutlinedInput
+                                            sx={{height: '5ch', boxShadow: 3, borderRadius: 2}}
+                                            id="Quantité"
+                                            onChange={(event) => {
+                                                createRemove(parseInt(event.target.value))
+                                            }}
+                                            aria-describedby="nom"
+                                            inputProps={{
+                                                'type': "number",
+                                                'min': "0",
+                                                'max': "1000",
+                                                'aria-label': 'weight',
+                                            }}
+                                        />
+                                    </FormControl>
+                                        <Button variant={"contained"}
+                                                sx={{
+                                                    backgroundColor: yellow[800],
+                                                    marginTop: 6,
+                                                    borderRadius: 3,
+                                                    ':hover': {bgcolor: blueGrey[900]}
+                                                }}
+                                                onClick={onSubmitRemove}><RemoveCircleIcon
+                                            sx={{color: "white"}}/>Dimunier
+                                        </Button></> : null}
+                                    {btn === "prix" ? <>
+                                        <FormControl sx={{m: 1, width: '35ch'}} variant="outlined">
+                                            <FormHelperText id="Quantité">
+                                                <Typography component="h3" sx={{fontSize: 23}} variant="h5">
+                                                    Modifier le prix d'achat
+                                                </Typography>
+                                            </FormHelperText>
 
-                                <OutlinedInput
-                                    sx={{height: '5ch', boxShadow: 3, borderRadius: 2}}
-                                    id="Quantité"
-                                    onChange={(event) => {
-                                        createAchat(parseInt(event.target.value))
-                                    }}
-                                    aria-describedby="nom"
-                                    inputProps={{
-                                        'type': "number",
-                                        'min': "0",
-                                        'max': "1000",
-                                        'aria-label': 'weight',
-                                    }}
-                                />
+                                            <OutlinedInput
+                                                sx={{height: '5ch', boxShadow: 3, borderRadius: 2}}
+                                                id="Quantité"
+                                                onChange={(event) => {
+                                                    createAchat(parseInt(event.target.value))
+                                                }}
+                                                aria-describedby="nom"
+                                                inputProps={{
+                                                    'type': "number",
+                                                    'min': "0",
+                                                    'max': "1000",
+                                                    'aria-label': 'weight',
+                                                }}
+                                            />
 
-                            </FormControl>
-                                <FormControl sx={{m: 1, width: '35ch'}} variant="outlined">
-                                <FormHelperText id="Quantité">
-                                    <Typography component="h3" sx={{fontSize: 23}} variant="h5">
-                                        Modifier le prix de vente
-                                    </Typography>
-                                </FormHelperText>
+                                        </FormControl>
+                                        <FormControl sx={{m: 1, width: '35ch'}} variant="outlined">
+                                            <FormHelperText id="Quantité">
+                                                <Typography component="h3" sx={{fontSize: 23}} variant="h5">
+                                                    Modifier le prix de vente
+                                                </Typography>
+                                            </FormHelperText>
 
-                                <OutlinedInput
-                                    sx={{height: '5ch', boxShadow: 3, borderRadius: 2}}
-                                    id="Quantité"
-                                    onChange={(event) => {
-                                        createVente(parseInt(event.target.value))
-                                    }}
-                                    aria-describedby="nom"
-                                    inputProps={{
-                                        'type': "number",
-                                        'min': "0",
-                                        'max': "1000",
-                                        'aria-label': 'weight',
-                                    }}
-                                />
+                                            <OutlinedInput
+                                                sx={{height: '5ch', boxShadow: 3, borderRadius: 2}}
+                                                id="Quantité"
+                                                onChange={(event) => {
+                                                    createVente(parseInt(event.target.value))
+                                                }}
+                                                aria-describedby="nom"
+                                                inputProps={{
+                                                    'type': "number",
+                                                    'min': "0",
+                                                    'max': "1000",
+                                                    'aria-label': 'weight',
+                                                }}
+                                            />
 
-                            </FormControl>
-                                <Button variant={"contained"}
-                                        sx={{
-                                            backgroundColor: red[800],
-                                            marginTop: 6,
-                                            borderRadius: 3,
-                                            ':hover': {bgcolor: blueGrey[900]}
-                                        }}
-                                        onClick={onSubmitPrix}><ModeIcon
-                                    sx={{color: "white"}}/>Modifier
-                                </Button></> : null}
-                        </DialogContent>
-                        }
-                    </Dialog>
-                </>)
+                                        </FormControl>
+                                        <Button variant={"contained"}
+                                                sx={{
+                                                    backgroundColor: red[800],
+                                                    marginTop: 6,
+                                                    borderRadius: 3,
+                                                    ':hover': {bgcolor: blueGrey[900]}
+                                                }}
+                                                onClick={onSubmitPrix}><ModeIcon
+                                            sx={{color: "white"}}/>Modifier
+                                        </Button></> : null}
+                                </DialogContent>
+                            }
+                        </Dialog>
+                    </>)
+            }
         }
 
 }
