@@ -419,9 +419,9 @@ export default function EnhancedTable({rows}) {
                                                 </TableCell>
                                                 <TableCell align="right">{row.nom}</TableCell>
                                                 <TableCell align="right">
-                                                    {row.prixAchat}
+                                                    {row.prixAchat} CFA
                                                 </TableCell>
-                                                <TableCell align="right">{row.prixVente}</TableCell>
+                                                <TableCell align="right">{row.prixVente} CFA</TableCell>
                                                 <TableCell align="right">{row.vendue}</TableCell>
                                                 <TableCell align="right">{row.stock}</TableCell>
                                                 <TableCell>
