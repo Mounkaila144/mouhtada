@@ -157,7 +157,6 @@ export default function Add({close}) {
                             onChange={(event) => {
                                 createStock(parseInt(event.target.value))
                             }}
-                            endAdornment={<InputAdornment position="end">CFA</InputAdornment>}
                             aria-describedby="nom"
                             inputProps={{
                                 'type': "number",
