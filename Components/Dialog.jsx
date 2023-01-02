@@ -39,7 +39,7 @@ const {dialog,setDialog}=useContext(DialogContext)
                 onClose={handleClose}
                 aria-describedby="alert-dialog-slide-description"
             >
-                <DialogTitle>{"Ajouter un nouveau meuble"}</DialogTitle>
+                <DialogTitle>{"Ajouter un nouveau article"}</DialogTitle>
                 <DialogContent >
                     <Add/>
                 </DialogContent>

@@ -46,7 +46,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export default function Vente({articles}) {
     const router = useRouter()
     const [search, setsearch] = useState("   ");
-    const [meuble, setMeuble] = useState([]);
+    const [article, setMeuble] = useState([]);
     const [add, setAdd] = useState([]);
     const [isLoaded, setIsLoaded] = useState(false);
     const [error, setError] = useState(null);
@@ -81,7 +81,7 @@ export default function Vente({articles}) {
             }, (error) => {
                 setError(true);
             })
-        console.log(meuble)
+        console.log(article)
     }
     const urls = url + '/api/articles?nom=' + search
     useEffect(() => {
@@ -149,7 +149,7 @@ export default function Vente({articles}) {
                     onClose={handleClose}
                     aria-describedby="alert-dialog-slide-description"
                 >
-                    <DialogTitle>{"Ajouter un nouveau meuble"}</DialogTitle>
+                    <DialogTitle>{"Ajouter un nouveau article"}</DialogTitle>
                     <DialogContent>
                         <Search setsearch={setsearch}/>
                         <TableContainer component={Paper}>
@@ -164,40 +164,40 @@ export default function Vente({articles}) {
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
-                                    {meuble.map((meubles) => {
+                                    {article.map((articles) => {
                                         return (
                                             <TableRow
-                                                key={meubles.id}
+                                                key={articles.id}
                                                 sx={{'&:last-child td, &:last-child th': {border: 0}}}
                                             >
                                                 <TableCell> <Image
-                                                    src={url + "/storage/meuble/" + meubles.image}
+                                                    src={url + "/storage/article/" + articles.image}
                                                     width={50} height={50} style={{borderRadius: 8}}
                                                     alt={"image"}/></TableCell>
-                                                <TableCell component="th" scope="meubles">
-                                                    {meubles.nom}
+                                                <TableCell component="th" scope="articles">
+                                                    {articles.nom}
                                                 </TableCell>
-                                                <TableCell>{meubles.prixVente}</TableCell>
-                                                <TableCell>{meubles.stock}</TableCell>
+                                                <TableCell>{articles.prixVente}</TableCell>
+                                                <TableCell>{articles.stock}</TableCell>
                                                 <TableCell>
                                                     <Button
                                                         variant="contained"
                                                         sx={{
                                                             marginTop: 1,
-                                                            backgroundColor: inCart(meubles.id) ? "#1b5e20" : blue[900],
+                                                            backgroundColor: inCart(articles.id) ? "#1b5e20" : blue[900],
                                                         }}
                                                         onClick={() => {
-                                                            inCart(meubles.id) ? removeItem(meubles.id) : addItem({
-                                                                'nom': meubles.nom,
-                                                                'stock': meubles.stock,
-                                                                'image': meubles.image,
-                                                                'price': meubles.prixVente,
-                                                                'id': meubles.id,
+                                                            inCart(articles.id) ? removeItem(articles.id) : addItem({
+                                                                'nom': articles.nom,
+                                                                'stock': articles.stock,
+                                                                'image': articles.image,
+                                                                'price': articles.prixVente,
+                                                                'id': articles.id,
                                                             })
                                                         }}>
                                                         <AddShoppingCartIcon
                                                             sx={{color: "white"}}
-                                                        />{inCart(meubles.id) ? <DoneIcon/> : "Ajouter"}
+                                                        />{inCart(articles.id) ? <DoneIcon/> : "Ajouter"}
                                                     </Button>
                                                 </TableCell>
                                             </TableRow>
@@ -244,21 +244,21 @@ export default function Vente({articles}) {
                                     </TableRow>
                                 </TableBody>:
                                     <TableBody>
-                                        {items.map((meubles) => {
+                                        {items.map((articles) => {
                                             return (
                                                 <TableRow
-                                                    key={meubles.id}
+                                                    key={articles.id}
                                                     sx={{'&:last-child td, &:last-child th': {border: 0}}}
                                                 >
                                                     <TableCell> <Image
-                                                        src={url + "/storage/meuble/" + meubles.image}
+                                                        src={url + "/storage/article/" + articles.image}
                                                         width={50} height={50} style={{borderRadius: 8}}
                                                         alt={"image"}/></TableCell>
-                                                    <TableCell component="th" scope="meubles">
-                                                        {meubles.nom}
+                                                    <TableCell component="th" scope="articles">
+                                                        {articles.nom}
                                                     </TableCell>
-                                                    <TableCell>{meubles.price} CFA</TableCell>
-                                                    <TableCell>{meubles.stock}</TableCell>
+                                                    <TableCell>{articles.price} CFA</TableCell>
+                                                    <TableCell>{articles.stock}</TableCell>
                                                     <TableCell><Box display="flex"
                                                                     justifyContent="center"
                                                                     alignItems="center" sx={{
@@ -270,8 +270,8 @@ export default function Vente({articles}) {
                                                         backgroundColor: blueGrey[900],
                                                         fontSize: 20,
                                                         color: "white"
-                                                    }}>{meubles.quantity}</Box></TableCell>
-                                                    <TableCell>{meubles.itemTotal} CFA</TableCell>
+                                                    }}>{articles.quantity}</Box></TableCell>
+                                                    <TableCell>{articles.itemTotal} CFA</TableCell>
                                                     <TableCell>
                                                         <Stack spacing={3} direction="row"
                                                                sx={{marginLeft: 7, marginTop: 0}}>
@@ -283,9 +283,9 @@ export default function Vente({articles}) {
                                                                         minWidth: '30px',
                                                                         minHeight: '20px'
                                                                     }}
-                                                                    onClick={() => updateItemQuantity(meubles.id, meubles.quantity - 1)}><RemoveCircleIcon
+                                                                    onClick={() => updateItemQuantity(articles.id, articles.quantity - 1)}><RemoveCircleIcon
                                                                 sx={{color: "white"}}/></Button>
-                                                            {meubles.stock > meubles.quantity ?
+                                                            {articles.stock > articles.quantity ?
                                                                 <Button variant={"contained"}
                                                                         sx={{color: "blue", borderRadius: 1}} style={{
                                                                     maxWidth: '50px',
@@ -293,7 +293,7 @@ export default function Vente({articles}) {
                                                                     minWidth: '30px',
                                                                     minHeight: '20px'
                                                                 }}
-                                                                        onClick={() => updateItemQuantity(meubles.id, meubles.quantity + 1)}><AddCircleIcon
+                                                                        onClick={() => updateItemQuantity(articles.id, articles.quantity + 1)}><AddCircleIcon
                                                                     sx={{color: "white"}}/></Button> :
                                                                 <Button variant={"outlined"} style={{
                                                                     maxWidth: '50px',
@@ -308,7 +308,7 @@ export default function Vente({articles}) {
                                                                         maxHeight: '25px',
                                                                         minWidth: '30px',
                                                                         minHeight: '20px'
-                                                                    }} onClick={() => removeItem(meubles.id)}><DeleteIcon
+                                                                    }} onClick={() => removeItem(articles.id)}><DeleteIcon
                                                                 style={{maxWidth: '20px', maxHeight: '20px',}}
                                                                 sx={{color: "white"}}/></Button>
                                                         </Stack>

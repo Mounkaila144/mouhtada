@@ -51,7 +51,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 export default function addStock({articles}) {
     const router = useRouter()
     const [search, setsearch] = useState("   ");
-    const [meuble, setMeuble] = useState([]);
+    const [article, setMeuble] = useState([]);
     const [add, setAdd] = useState([]);
     const [isLoaded, setIsLoaded] = useState(false);
     const [error, setError] = useState(null);
@@ -86,7 +86,7 @@ export default function addStock({articles}) {
             }, (error) => {
                 setError(true);
             })
-        console.log(meuble)
+        console.log(article)
     }
     const urls = url + '/api/historique/add?nom=' + search
     useEffect(() => {
@@ -124,7 +124,7 @@ export default function addStock({articles}) {
                             id="tableTitle"
                             component="div"
                         >
-                            Meubles
+                            Articles
                         </Typography>
                     <Search setsearch={setsearch}/>
                 </Toolbar>
@@ -138,20 +138,20 @@ export default function addStock({articles}) {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {meuble.map((meubles) => {
-                                const fullDate = meubles.created_at;
+                            {article.map((articles) => {
+                                const fullDate = articles.created_at;
                                 const date = new Date(fullDate);
                                 const shortDate = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}h:${date.getMinutes()}:${date.getSeconds()}`;
 
                                 return (
                                     <TableRow
-                                        key={meubles.id}
+                                        key={articles.id}
                                         sx={{'&:last-child td, &:last-child th': {border: 0}}}
                                     >
-                                        <TableCell component="th" scope="meubles">
-                                            {meubles.nom}
+                                        <TableCell component="th" scope="articles">
+                                            {articles.nom}
                                         </TableCell>
-                                        <TableCell>{meubles.quantite}</TableCell>
+                                        <TableCell>{articles.quantite}</TableCell>
                                         <TableCell>{shortDate}</TableCell>
                                     </TableRow>
                                 );

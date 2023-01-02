@@ -95,8 +95,8 @@ export default function Sidbare({content}) {
                     }}>
                     <ListItem key={1} disablePadding sx={{ display: 'block' }}>
                         <ButtonSide text={"Dashboard"} open={open} icon={<DashboardIcon/>} link={"/"}/>
-                        <ButtonSide text={"Meubles"} open={open} icon={<CategoryIcon/>} link={"/articles/articles"}/>
-                        <ButtonSide text={"Ventes des meubles"} open={open} icon={<PaidIcon/>} link={"/articles/vente"}/>
+                        <ButtonSide text={"Articles"} open={open} icon={<CategoryIcon/>} link={"/articles/articles"}/>
+                        <ButtonSide text={"Ventes des articles"} open={open} icon={<PaidIcon/>} link={"/articles/vente"}/>
                         <ButtonSide text={"Factures des ventes"} open={open} icon={<PrintIcon/>} link={"/factures/factures"}/>
                         <ButtonSide text={"AJouter de l'argent"} open={open} icon={<LibraryAddIcon/>} link={"/ajouter/ajouter"}/>
                         <ButtonSide text={"Retirer de l'argent"} open={open} icon={<RemoveCircleIcon/>} link={"/retirer/retirer"}/>

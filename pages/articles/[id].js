@@ -50,7 +50,7 @@ export default function Article(props) {
                     onClose={handleClose}
                     aria-describedby="alert-dialog-slide-description"
                 >
-                    <DialogTitle>{"Modifier un meuble"}</DialogTitle>
+                    <DialogTitle>{"Modifier un article"}</DialogTitle>
                     <DialogContent>
                         <Edit article={props.article}/>
                     </DialogContent>

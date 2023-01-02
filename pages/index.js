@@ -80,7 +80,7 @@ function Dashboard() {
                                         borderRadius: 2,
                                         boxShadow: 3,
                                         marginTop: -5
-                                    }}/>} text={"Nombre de Meuble"} number={data.TotalArticle}/>
+                                    }}/>} text={"Nombre de Article"} number={data.TotalArticle}/>
                                 </Grid>
                                 <Grid item xs={4}><ItemCard icon={<PaidIcon sx={{
                                     fontSize: 60,
@@ -105,7 +105,7 @@ function Dashboard() {
                                     borderRadius: 2,
                                     boxShadow: 3,
                                     marginTop: -5
-                                }}/>} text={"Nombre De meuble Vendue"} number={data.articleVendue}/></Grid>
+                                }}/>} text={"Nombre De article Vendue"} number={data.articleVendue}/></Grid>
                                 <Grid item xs={4}><ItemCard icon={<PaidIcon sx={{
                                     fontSize: 60,
                                     color: "white",

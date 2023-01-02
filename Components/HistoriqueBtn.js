@@ -68,7 +68,7 @@ export default function HistoriqueMenu({text,icon}) {
                 <MenuItem sx={{color: "white", maxHeight: 100, borderRadius: 5, background: blueGrey[700], justifyContent: 'initial', px: 2.5, '&:hover': {background: blue[800], borderRadius: 5,}, margin:1,boxShadow:3}}
                           onClick={()=>router.push("/historique/prixStock")}>Modification des Prix</MenuItem>
                 <MenuItem sx={{color: "white", maxHeight: 100, borderRadius: 5, background: blueGrey[700], justifyContent: 'initial', px: 2.5, '&:hover': {background: blue[800], borderRadius: 5,}, margin:1,boxShadow:3}}
-                          onClick={()=>router.push("/historique/delectStock")}>Supression de meubles</MenuItem>
+                          onClick={()=>router.push("/historique/delectStock")}>Supression de articles</MenuItem>
             </Menu>
         </div>
     );

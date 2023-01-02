@@ -204,7 +204,7 @@ function EnhancedTableToolbar(props) {
                         id="tableTitle"
                         component="div"
                     >
-                        Meubles
+                        Articles
                     </Typography>
                 )}
 
