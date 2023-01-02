@@ -8,7 +8,7 @@ import {useRouter} from "next/router";
 import Circular from "../../Components/Circular";
 import RetirerTable from "../../Components/tableau/retirerTable";
 
-export default function Home({entresorties}) {
+export default function Retirer({entresorties}) {
     return (
         <RetirerTable rows={entresorties}/>
     );
