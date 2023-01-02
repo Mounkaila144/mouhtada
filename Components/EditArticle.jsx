@@ -17,6 +17,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import {useRouter} from "next/router";
 import {Alert, AlertTitle, Backdrop, CircularProgress} from "@mui/material";
 import url from "./global";
+import Circular from "./Circular";
 
 const FormData = require('form-data');
 
@@ -30,28 +31,24 @@ export default function Edit({close,article}) {
     const [loading, setLoading] = useState(false)
     const router=useRouter();
     const [show, setShow] = useState(false)
+    const [error, setError] = useState(false)
+
     const refreshData=()=>{
         router.replace(router.asPath)
     }
-    useEffect(() => {
-        const timeId = setTimeout(() => {
-            // After 3 seconds set the show value to false
-            setShow(false)
-        }, 3000)
-
-        return () => {
-            clearTimeout(timeId)
-            router.push("/articles/articles");
-
-        }
-    }, []);
     const getImage = (image) => {
         // 👇️ take parameter passed from Child component
         createimage(image);
     };
-
+if (show){
+    setTimeout(() => {
+        // After 3 seconds set the show value to false
+        router.push("/articles/articles");
+    }, 1000)
+}
     const onSubmit = async (e) => {
         e.preventDefault()
+
         setLoading(true)
         const formData = new FormData();
         nom===null?null:formData.append('nom', nom);
@@ -64,12 +61,13 @@ export default function Edit({close,article}) {
             const res = await axios.post(url+'/api/articles/'+article.id+"?_method=PUT", formData, {
                 headers: {'Content-Type': 'multipart/form-data'}
             }).then(
-            ).finally(()=>setLoading(false));
-            if (res.status===200){
-                await  setShow(true)
+                async function (response) {
+                    if (response.status === 200) {
+                        await setShow(true)
 
-            }
-            console.log(res.data)
+                    }
+                }
+            ).finally(()=>setLoading(false));
         } catch (e) {
             alert(e)
         }
@@ -85,14 +83,10 @@ export default function Edit({close,article}) {
     }else {
         if (loading) {
             return (
-                <Backdrop
-                    sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}}
-                    open={true}
-                >
-                    <CircularProgress color="inherit"/>
-                </Backdrop>
+                <Circular/>
             )
-        } else {
+        }
+        else {
             return (
                 <Box>
                     <Box sx={{margin: 1, boxShadow: 3, borderRadius: 3}}>

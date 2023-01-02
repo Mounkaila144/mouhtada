@@ -10,12 +10,13 @@ import Add from "./AddArticle";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import {useContext} from "react";
 import {DialogContext} from "../Context/GlobalContext";
+import AddRetirer from "./AddRetirer";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function ArticleDialog() {
+export default function RetirerDialog() {
 const {dialog,setDialog}=useContext(DialogContext)
     const handleClickOpen = () => {
         setDialog(true);
@@ -39,9 +40,9 @@ const {dialog,setDialog}=useContext(DialogContext)
                 onClose={handleClose}
                 aria-describedby="alert-dialog-slide-description"
             >
-                <DialogTitle>{"Ajouter un nouveau meuble"}</DialogTitle>
+                <DialogTitle>{"Retirer de l'argent dans la caisse"}</DialogTitle>
                 <DialogContent >
-                    <Add/>
+                    <AddRetirer/>
                 </DialogContent>
             </Dialog>
         </div>

@@ -68,46 +68,41 @@ function stableSort(array, comparator) {
 
 const headCells = [
     {
+        id: 'id',
+        numeric: true,
+        disablePadding: true,
+        label: 'N°',
+    },
+    {
         id: 'name',
         numeric: true,
         disablePadding: true,
-        label: 'Image',
+        label: 'Nom',
     },
     {
         id: 'calories',
         numeric: true,
         disablePadding: false,
-        label: 'Nom',
+        label: 'Prenom',
     },
     {
         id: 'carbs',
         numeric: true,
         disablePadding: false,
-        label: "Prix d'Achat",
-    },
-    {
-        id: 'protein',
-        numeric: true,
-        disablePadding: false,
-        label: "Prix de vente",
+        label: "Adresse",
     },
      {
         id: 'vendue',
         numeric: true,
         disablePadding: false,
-        label: "Nombre vendue",
+        label: "Date",
     }, {
         id: 'restant',
         numeric: true,
         disablePadding: false,
-        label: "Restant",
+        label: "Factures",
     },
-    {
-        id: '',
-        numeric: true,
-        disablePadding: false,
-        label: "",
-    },
+
 
 ];
 
@@ -121,21 +116,9 @@ function EnhancedTableHead(props) {
     return (
         <TableHead>
             <TableRow>
-                <TableCell padding="checkbox">
-                    <Checkbox
-                        color="primary"
-                        indeterminate={numSelected > 0 && numSelected < rowCount}
-                        checked={rowCount > 0 && numSelected === rowCount}
-                        onChange={onSelectAllClick}
-                        inputProps={{
-                            'aria-label': 'select all desserts',
-                        }}
-                    />
-                </TableCell>
                 {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}
-                        align={headCell.numeric ? 'right' : 'left'}
                         padding={headCell.disablePadding ? 'none' : 'normal'}
                         sortDirection={orderBy === headCell.id ? order : false}
                     >
@@ -180,7 +163,7 @@ function EnhancedTableToolbar(props) {
     console.log(data)
     const removeSelect = async () => {
         setLoading(true)
-        const res = await axios.post(url + '/api/articles/delect', {"data":data})
+        const res = await axios.post(url + '/api/factures/delect', {"data":data})
             .then(function (response) {
                 if(response.status===200){
                     numSelected.length=0
@@ -251,7 +234,7 @@ function EnhancedTableToolbar(props) {
 EnhancedTableToolbar.propTypes = {
     numSelected: PropTypes.number.isRequired,
 };
-export default function EnhancedTable({rows}) {
+export default function FactureTable({rows}) {
     const router = useRouter()
     const refreshData=()=>{
         router.replace(router.asPath)
@@ -269,7 +252,7 @@ export default function EnhancedTable({rows}) {
     const [add, setAdd] = useState(null)
     const Submitremove = async (id) => {
         setLoading(true)
-        const res = await axios.post(url + '/api/articles/remove/'+id, {"remove":remove})
+        const res = await axios.post(url + '/api/factures/remove/'+id, {"remove":remove})
             .then(function (response) {
                 if(response.status===200){
                     refreshData();
@@ -281,7 +264,7 @@ export default function EnhancedTable({rows}) {
     };
     const Submitadd = async (id) => {
         setLoading(true)
-        const res = await axios.post(url + '/api/articles/remove/'+id, {"remove":add})
+        const res = await axios.post(url + '/api/factures/remove/'+id, {"remove":add})
             .then(function (response) {
                 if(response.status===200){
                     refreshData();
@@ -384,6 +367,9 @@ export default function EnhancedTable({rows}) {
                                     .map((row, index) => {
                                         const isItemSelected = isSelected(row.id);
                                         const labelId = `enhanced-table-checkbox-${index}`;
+                                        const fullDate = row.created_at;
+                                        const date = new Date(fullDate);
+                                        const shortDate = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}h:${date.getMinutes()}:${date.getSeconds()}`;
 
                                         return (
                                             <TableRow
@@ -391,7 +377,7 @@ export default function EnhancedTable({rows}) {
                                                 onClick={(event) => handleClick(event, row.id)}
                                                 onDoubleClick={() => {
                                                     setLoading(true)
-                                                    router.push("/articles/" + row.id)
+                                                    router.push("/factures/" + row.id)
 
                                                 }}
                                                 role="checkbox"
@@ -400,34 +386,17 @@ export default function EnhancedTable({rows}) {
                                                 key={row.id}
                                                 selected={isItemSelected}
                                             >
-                                                <TableCell padding="checkbox">
-                                                    <Checkbox
-                                                        color="primary"
-                                                        checked={isItemSelected}
-                                                        inputProps={{
-                                                            'aria-labelledby': labelId,
-                                                        }}
-                                                    />
+                                                <TableCell >#0{row.id}</TableCell>
+                                                <TableCell >{row.nom}</TableCell>
+                                                <TableCell >
+                                                    {row.prenom}
                                                 </TableCell>
-                                                <TableCell
-                                                    align="right"
-                                                >
-                                                    <Image
-                                                        src={url + "/storage/meuble/" + row.image}
-                                                        width={70} height={70}
-                                                        alt={"image"}/>
-                                                </TableCell>
-                                                <TableCell align="right">{row.nom}</TableCell>
-                                                <TableCell align="right">
-                                                    {row.prixAchat}
-                                                </TableCell>
-                                                <TableCell align="right">{row.prixVente}</TableCell>
-                                                <TableCell align="right">{row.vendue}</TableCell>
-                                                <TableCell align="right">{row.stock}</TableCell>
+                                                <TableCell >{row.adresse}</TableCell>
+                                                <TableCell >{shortDate}</TableCell>
                                                 <TableCell>
                                                             <Button variant={"contained"}
                                                                     sx={{ borderRadius: 2}}
-                                                                    onClick={() =>router.push("/stocks/" + row.id)}>Operation</Button>
+                                                                    onClick={() =>router.push(url+'/api/factures/' + row.id)}>Generer</Button>
 
 
                                                 </TableCell>

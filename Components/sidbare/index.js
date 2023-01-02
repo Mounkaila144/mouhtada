@@ -10,6 +10,15 @@ import ListItem from '@mui/material/ListItem';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import {blue, blueGrey, grey} from "@mui/material/colors";
 import ButtonSide from "./ButtonSide";
+import HistoriqueMenu from "../HistoriqueBtn";
+import PaidIcon from '@mui/icons-material/Paid';
+import CategoryIcon from '@mui/icons-material/Category';
+import PrintIcon from '@mui/icons-material/Print';
+import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
+import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import {useContext} from "react";
+import {DialogContext, DrawerContext} from "../../Context/GlobalContext";
 
 const drawerWidth = 240;
 
@@ -62,7 +71,8 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 );
 
 export default function Sidbare({content}) {
-    const [open, setOpen] = React.useState(true);
+    const {open,setOpen}=useContext(DrawerContext)
+
 
     const handleDrawerClose = () => {
         open? setOpen(false):setOpen(true);
@@ -81,11 +91,16 @@ export default function Sidbare({content}) {
                 <List
                     sx={{
                         backgroundColor: blueGrey[900],
+                        height:"100vh"
                     }}>
                     <ListItem key={1} disablePadding sx={{ display: 'block' }}>
                         <ButtonSide text={"Dashboard"} open={open} icon={<DashboardIcon/>} link={"/"}/>
-                        <ButtonSide text={"Articles"} open={open} icon={<DashboardIcon/>} link={"/articles/articles"}/>
-                        <ButtonSide text={"Dashboard"} open={open} icon={<DashboardIcon/>} link={"/"}/>
+                        <ButtonSide text={"Meubles"} open={open} icon={<CategoryIcon/>} link={"/articles/articles"}/>
+                        <ButtonSide text={"Ventes des meubles"} open={open} icon={<PaidIcon/>} link={"/articles/vente"}/>
+                        <ButtonSide text={"Factures des ventes"} open={open} icon={<PrintIcon/>} link={"/factures/factures"}/>
+                        <ButtonSide text={"AJouter de l'argent"} open={open} icon={<LibraryAddIcon/>} link={"/ajouter/ajouter"}/>
+                        <ButtonSide text={"Retirer de l'argent"} open={open} icon={<RemoveCircleIcon/>} link={"/retirer/retirer"}/>
+                        <HistoriqueMenu text={"historique"} icon={<FormatListBulletedIcon/>}/>
                     </ListItem>
                 </List>
                 <Divider />

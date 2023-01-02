@@ -36,6 +36,8 @@ import {useState} from "react";
 import Circular from "../Circular";
 import ErrorPage from "../ErrorPage";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+import RetirerDialog from "../RetirerDialog";
+import AjouterDialog from "../AjouterDialog";
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -71,42 +73,19 @@ const headCells = [
         id: 'name',
         numeric: true,
         disablePadding: true,
-        label: 'Image',
+        label: 'Somme retirer',
     },
     {
         id: 'calories',
         numeric: true,
         disablePadding: false,
-        label: 'Nom',
-    },
-    {
-        id: 'carbs',
-        numeric: true,
-        disablePadding: false,
-        label: "Prix d'Achat",
+        label: 'Motif',
     },
     {
         id: 'protein',
         numeric: true,
         disablePadding: false,
-        label: "Prix de vente",
-    },
-     {
-        id: 'vendue',
-        numeric: true,
-        disablePadding: false,
-        label: "Nombre vendue",
-    }, {
-        id: 'restant',
-        numeric: true,
-        disablePadding: false,
-        label: "Restant",
-    },
-    {
-        id: '',
-        numeric: true,
-        disablePadding: false,
-        label: "",
+        label: "Date",
     },
 
 ];
@@ -180,7 +159,7 @@ function EnhancedTableToolbar(props) {
     console.log(data)
     const removeSelect = async () => {
         setLoading(true)
-        const res = await axios.post(url + '/api/articles/delect', {"data":data})
+        const res = await axios.post(url + '/api/entresortis', {"data":data})
             .then(function (response) {
                 if(response.status===200){
                     numSelected.length=0
@@ -251,7 +230,7 @@ function EnhancedTableToolbar(props) {
 EnhancedTableToolbar.propTypes = {
     numSelected: PropTypes.number.isRequired,
 };
-export default function EnhancedTable({rows}) {
+export default function AjouterTable({rows}) {
     const router = useRouter()
     const refreshData=()=>{
         router.replace(router.asPath)
@@ -361,7 +340,7 @@ export default function EnhancedTable({rows}) {
                 <Paper sx={{width: '100%', mb: 2}}>
                     <EnhancedTableToolbar numSelected={selected}/>
                     <TableContainer>
-                        <ArticleDialog/>
+                        <AjouterDialog/>
 
                         <Table
                             sx={{minWidth: 950}}
@@ -384,6 +363,9 @@ export default function EnhancedTable({rows}) {
                                     .map((row, index) => {
                                         const isItemSelected = isSelected(row.id);
                                         const labelId = `enhanced-table-checkbox-${index}`;
+                                        const fullDate = row.created_at;
+                                        const date = new Date(fullDate);
+                                        const shortDate = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}h:${date.getMinutes()}:${date.getSeconds()}`;
 
                                         return (
                                             <TableRow
@@ -409,28 +391,11 @@ export default function EnhancedTable({rows}) {
                                                         }}
                                                     />
                                                 </TableCell>
-                                                <TableCell
-                                                    align="right"
-                                                >
-                                                    <Image
-                                                        src={url + "/storage/meuble/" + row.image}
-                                                        width={70} height={70}
-                                                        alt={"image"}/>
-                                                </TableCell>
-                                                <TableCell align="right">{row.nom}</TableCell>
+                                                <TableCell align="right">{row.prix} CFA</TableCell>
                                                 <TableCell align="right">
-                                                    {row.prixAchat}
+                                                    {row.motif}
                                                 </TableCell>
-                                                <TableCell align="right">{row.prixVente}</TableCell>
-                                                <TableCell align="right">{row.vendue}</TableCell>
-                                                <TableCell align="right">{row.stock}</TableCell>
-                                                <TableCell>
-                                                            <Button variant={"contained"}
-                                                                    sx={{ borderRadius: 2}}
-                                                                    onClick={() =>router.push("/stocks/" + row.id)}>Operation</Button>
-
-
-                                                </TableCell>
+                                                <TableCell align="right">{shortDate}</TableCell>
                                             </TableRow>
                                         );
                                     })}
