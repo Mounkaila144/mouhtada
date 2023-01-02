@@ -28,7 +28,18 @@ export default function Article(props) {
         setOpen(false);
         router.push("/articles/articles")
     };
-
+    console.log(props.article)
+    if (router.isFallback) {
+        return (
+            <Backdrop
+                sx={{color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1}}
+                open={true}
+            >
+                <CircularProgress color="inherit"/>
+            </Backdrop>
+        )
+    }
+    else {
         return (
             <>
                 <Home articles={props.articles}/>
@@ -49,7 +60,7 @@ export default function Article(props) {
                     {/*</DialogActions>*/}
                 </Dialog>
             </>)
-
+    }
 }
 
 // Generates `/posts/1` and `/posts/2`
