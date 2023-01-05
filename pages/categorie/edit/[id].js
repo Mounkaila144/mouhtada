@@ -5,7 +5,7 @@ import * as React from "react";
 import Slide from "@mui/material/Slide";
 import {useRouter} from "next/router";
 import {Backdrop} from "@mui/material";
-import Home from "../../articles/categorie";
+import Home from "../categorie";
 import Edit from "../../../Components/EditArticle";
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;

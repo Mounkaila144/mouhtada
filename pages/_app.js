@@ -45,7 +45,6 @@ const MyApp = (props) => {
             console.log(decoded);
         }else {
             setUser(0)
-            window.location.reload();
         }
         console.log(user)
     }, []);

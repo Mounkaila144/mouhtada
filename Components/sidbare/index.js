@@ -113,7 +113,7 @@ export default function Sidbare({content}) {
                 {user===2?
                     <ListItem key={1} disablePadding sx={{display: 'block'}}>
                         <ButtonSide text={"Dashboard"} open={open} icon={<DashboardIcon/>} link={"/"}/>
-                        <ButtonSide text={"Articles"} open={open} icon={<CategoryIcon/>} link={"/articles/categorie"}/>
+                        <ButtonSide text={"Articles"} open={open} icon={<CategoryIcon/>} link={"/categorie/categorie"}/>
                         <ButtonSide text={"Ventes des articles"} open={open} icon={<PaidIcon/>}
                                     link={"/articles/vente"}/>
                         <ButtonSide text={"Factures des ventes"} open={open} icon={<PrintIcon/>}
@@ -147,7 +147,7 @@ export default function Sidbare({content}) {
                     :user===1?
                     <ListItem key={1} disablePadding sx={{display: 'block'}}>
                         <ButtonSide text={"Dashboard"} open={open} icon={<DashboardIcon/>} link={"/"}/>
-                        <ButtonSide text={"Articles"} open={open} icon={<CategoryIcon/>} link={"/articles/categorie"}/>
+                        <ButtonSide text={"Articles"} open={open} icon={<CategoryIcon/>} link={"/categorie/categorie"}/>
                         <ButtonSide text={"Ventes des articles"} open={open} icon={<PaidIcon/>}
                                     link={"/articles/vente"}/>
                         <ButtonSide text={"Factures des ventes"} open={open} icon={<PrintIcon/>}
