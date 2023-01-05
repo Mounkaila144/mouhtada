@@ -26,12 +26,6 @@ function Dashboard() {
     }
 
     useEffect(() => {
-        if (!user) {
-            router.push('login');
-        }
-    }, [user])
-
-    useEffect(() => {
         async function fetchData() {
             await MyRequest('dahboard', 'GET', {}, { 'Content-Type': 'application/json' })
                 .then(async (response) => {

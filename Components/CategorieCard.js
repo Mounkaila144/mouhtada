@@ -12,13 +12,14 @@ import Link from "next/link";
 import url from "./global";
 import Image from "next/image";
 import CardActions from "@mui/material/CardActions";
-import {router} from "next/client";
 import {useContext} from "react";
 import {UserContext} from "../Context/GlobalContext";
+import {useRouter} from "next/router";
 
 export default function CategorieCard({categories}) {
     const {user,setUser}=useContext(UserContext)
     const theme = createTheme();
+    const router = useRouter();
 
     theme.typography.h3 = {
         fontSize: '1.2rem',
