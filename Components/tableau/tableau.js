@@ -408,7 +408,7 @@ export default function EnhancedTable({rows,id}) {
                                                 key={row.id}
                                                 selected={isItemSelected}
                                             >
-                                                <TableCell padding="checkbox">
+                                                {user===2?<TableCell padding="checkbox">
                                                     <Checkbox
                                                         color="primary"
                                                         checked={isItemSelected}
@@ -416,7 +416,7 @@ export default function EnhancedTable({rows,id}) {
                                                             'aria-labelledby': labelId,
                                                         }}
                                                     />
-                                                </TableCell>
+                                                </TableCell>:null}
                                                 <TableCell
                                                     align="right"
                                                 >
