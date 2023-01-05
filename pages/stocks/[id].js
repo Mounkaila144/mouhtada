@@ -12,7 +12,7 @@ import Edit from "../../Components/EditArticle";
 import {Alert, AlertTitle, Backdrop, CircularProgress, OutlinedInput, Stack, Typography} from "@mui/material";
 import {useState} from "react";
 import url from "../../Components/global";
-import Home from "../articles/articles";
+import Home from "../../Components/articles";
 import FormControl from "@mui/material/FormControl";
 import FormHelperText from "@mui/material/FormHelperText";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -23,10 +23,11 @@ import {blueGrey, red, yellow} from "@mui/material/colors";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import Circular from "../../Components/Circular";
+import MyRequest from "../../Components/request";
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
-export default function Article(props) {
+export default function Article() {
     const router = useRouter();
     const [open, setOpen] = React.useState(true);
     const [add, createAdd] = useState(null)
@@ -46,36 +47,26 @@ export default function Article(props) {
         const formData = {
             "remove": remove,
         }
-        try {
-            const res = await axios.post(url + '/api/articles/stocks/' + id, formData).then(
-                async function (response) {
-                    if (response.status === 200) {
-                        await setShow(true)
-                    }
+        await MyRequest('articles/stocks/' + id, 'POST', formData, { 'Content-Type': 'application/json' })
+            .then(async (response) => {
+                if (response.status === 200) {
+                    await setShow(true)
                 }
-            ).finally(() => setLoading(false));
-        } catch (e) {
-            alert(e)
-        }
-
+            }).finally(() => setLoading(false)).catch( (e)=>alert(e) )
     }
+
     const onSubmitAdd = async (e) => {
         e.preventDefault()
         setLoading(true)
         const formData = {
             "add": add,
         }
-        try {
-            const res = await axios.post(url + '/api/articles/stocks/' + id, formData).then(
-                async function (response) {
-                    if (response.status === 200) {
-                        await setShow(true)
-                    }
+        await MyRequest('articles/stocks/' + id, 'POST', formData, { 'Content-Type': 'application/json' })
+            .then(async (response) => {
+                if (response.status === 200) {
+                    await setShow(true)
                 }
-            ).finally(() => setLoading(false));
-        } catch (e) {
-            alert(e)
-        }
+            }).finally(() => setLoading(false)).catch( (e)=>alert(e) )
 
     }
     const onSubmitPrix = async (e) => {
@@ -85,17 +76,12 @@ export default function Article(props) {
             "prixAchat": achat,
             "prixVente": vente
         }
-        try {
-            const res = await axios.post(url + '/api/articles/stocks/' + id, formData).then(
-                async function (response) {
-                    if (response.status === 200) {
-                        await setShow(true)
-                    }
+        await MyRequest('articles/stocks/' + id, 'POST', formData, { 'Content-Type': 'application/json' })
+            .then(async (response) => {
+                if (response.status === 200) {
+                    await setShow(true)
                 }
-            ).finally(() => setLoading(false));
-        } catch (e) {
-            alert(e)
-        }
+            }).finally(() => setLoading(false)).catch( (e)=>alert(e) )
 
     }
 
@@ -132,7 +118,7 @@ export default function Article(props) {
             else {
                 return (
                     <>
-                        <Home articles={props.articles}/>
+                        <Home/>
                         <Dialog
                             open={open}
                             TransitionComponent={Transition}
@@ -298,24 +284,4 @@ export default function Article(props) {
             }
         }
 
-}
-
-// Generates `/posts/1` and `/posts/2`
-export async function getStaticPaths() {
-    const res = await fetch(url+'/api/articles');
-    const articles=await res.json();
-    const paths=await articles.map(a=>({params:{id:a.id.toString()}}))
-    return {
-        paths,
-        fallback: true, // can also be true or 'blocking'
-    }
-}
-
-export async function getStaticProps(context) {
-    const rest = await fetch(url+'/api/articles');
-    const articles=await rest.json();
-    return {
-        // Passed to the page component as props
-        props: {articles},
-    }
 }

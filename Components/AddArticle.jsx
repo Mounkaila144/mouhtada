@@ -19,10 +19,11 @@ import url from "./global";
 import Circular from "./Circular";
 import {DialogContext} from "../Context/GlobalContext";
 import ErrorPage from "./ErrorPage";
+import MyRequest from "./request";
 
 const FormData = require('form-data');
 
-export default function Add({close}) {
+export default function Add({id}) {
     const [nom, createNom] = useState("rrr")
     const [prixAchat, createPrixAchat] = useState(1)
     const [prixVente, createPrixVente] = useState(5)
@@ -36,8 +37,8 @@ export default function Add({close}) {
 
 
     const router=useRouter();
-    const refreshData=()=>{
-        router.replace(router.asPath)
+    const refreshData = () => {
+        router.push('/categorie/'+id+"?refresh="+Date.now());
     }
 
     const getImage = (image) => {
@@ -55,16 +56,16 @@ export default function Add({close}) {
         formData.append('stock', stock);
         formData.append('vendue', vendue);
         formData.append('image', image);
+        formData.append('categorie_id', id);
         try {
             setLoading(true)
-            const res = await axios.post(url+'/api/articles', formData, {
-                headers: {'Content-Type': 'multipart/form-data'}
-            }).finally(()=>setLoading(false));
-            if (res.status===200){
-                await refreshData()
-                setDialog(false)
-            }
-            console.log(res.data)
+            MyRequest('articles', 'POST', formData, { 'Content-Type': 'multipart/form-data' })
+                .then(async (response) => {
+                    if (response.status === 200) {
+                        await refreshData()
+                        setDialog(false)
+                    }
+                }).finally(() => setLoading(false));
         } catch (e) {
             setError(true)
         }

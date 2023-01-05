@@ -32,10 +32,11 @@ import ArticleDialog from "../Dialog";
 import {useRouter} from "next/router";
 import url from "../global";
 import axios from "axios";
-import {useState} from "react";
+import {useContext, useState} from "react";
 import Circular from "../Circular";
 import ErrorPage from "../ErrorPage";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+import {UserContext} from "../../Context/GlobalContext";
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -102,12 +103,7 @@ const headCells = [
         disablePadding: false,
         label: "Restant",
     },
-    {
-        id: '',
-        numeric: true,
-        disablePadding: false,
-        label: "",
-    },
+
 
 ];
 
@@ -117,10 +113,13 @@ function EnhancedTableHead(props) {
     const createSortHandler = (property) => (event) => {
         onRequestSort(event, property);
     };
+    const {user,setUser}=useContext(UserContext)
+
 
     return (
         <TableHead>
             <TableRow>
+                {user===2?
                 <TableCell padding="checkbox">
                     <Checkbox
                         color="primary"
@@ -131,7 +130,7 @@ function EnhancedTableHead(props) {
                             'aria-label': 'select all desserts',
                         }}
                     />
-                </TableCell>
+                </TableCell>:null}
                 {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}
@@ -153,6 +152,10 @@ function EnhancedTableHead(props) {
                         </TableSortLabel>
                     </TableCell>
                 ))}
+
+                {user===2?
+                    <TableCell> </TableCell>:null
+                }
             </TableRow>
         </TableHead>
     );
@@ -251,7 +254,7 @@ function EnhancedTableToolbar(props) {
 EnhancedTableToolbar.propTypes = {
     numSelected: PropTypes.number.isRequired,
 };
-export default function EnhancedTable({rows}) {
+export default function EnhancedTable({rows,id}) {
     const router = useRouter()
     const refreshData=()=>{
         router.replace(router.asPath)
@@ -347,6 +350,7 @@ export default function EnhancedTable({rows}) {
     }
 
     const isSelected = (name) => selected.indexOf(name) !== -1;
+    const {user,setUser}=useContext(UserContext)
 
     // Avoid a layout jump when reaching the last page with empty rows.
     const emptyRows =
@@ -359,10 +363,12 @@ export default function EnhancedTable({rows}) {
         return (
             <Box sx={{margin: 1, boxShadow: 2}}>
                 <Paper sx={{width: '100%', mb: 2}}>
-                    <EnhancedTableToolbar numSelected={selected}/>
+                    {user===2?
+                    <EnhancedTableToolbar numSelected={selected}/>:null}
                     <TableContainer>
-                        <ArticleDialog/>
-
+                        {user===2?
+                        <ArticleDialog id={id}/>:null
+                        }
                         <Table
                             sx={{minWidth: 950}}
                             aria-labelledby="tableTitle"
@@ -388,12 +394,14 @@ export default function EnhancedTable({rows}) {
                                         return (
                                             <TableRow
                                                 hover
-                                                onClick={(event) => handleClick(event, row.id)}
-                                                onDoubleClick={() => {
-                                                    setLoading(true)
-                                                    router.push("/articles/" + row.id)
-
+                                                onClick={(event) => {
+                                                   user===2? handleClick(event, row.id):null
                                                 }}
+                                                // onDoubleClick={() => {
+                                                //     setLoading(true)
+                                                //     router.push("/articles/" + row.id)
+                                                //
+                                                // }}
                                                 role="checkbox"
                                                 aria-checked={isItemSelected}
                                                 tabIndex={-1}
@@ -413,7 +421,7 @@ export default function EnhancedTable({rows}) {
                                                     align="right"
                                                 >
                                                     <Image
-                                                        src={url + "/storage/meuble/" + row.image}
+                                                        src={url + "/storage/article/" + row.image}
                                                         width={70} height={70}
                                                         alt={"image"}/>
                                                 </TableCell>
@@ -424,13 +432,16 @@ export default function EnhancedTable({rows}) {
                                                 <TableCell align="right">{row.prixVente} CFA</TableCell>
                                                 <TableCell align="right">{row.vendue}</TableCell>
                                                 <TableCell align="right">{row.stock}</TableCell>
-                                                <TableCell>
-                                                            <Button variant={"contained"}
-                                                                    sx={{ borderRadius: 2}}
-                                                                    onClick={() =>router.push("/stocks/" + row.id)}>Operation</Button>
+                                                {user===2?
+                                                    <TableCell>
+                                                        <Button variant={"contained"}
+                                                                sx={{ borderRadius: 2}}
+                                                                onClick={() =>router.push("/stocks/" + row.id)}>Operation</Button>
 
 
-                                                </TableCell>
+                                                    </TableCell> :null
+                                                }
+
                                             </TableRow>
                                         );
                                     })}

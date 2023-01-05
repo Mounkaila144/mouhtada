@@ -21,6 +21,7 @@ import {DialogContext} from "../Context/GlobalContext";
 import ErrorPage from "./ErrorPage";
 import {Grid} from "@mui/material";
 import BeenhereIcon from "@mui/icons-material/Beenhere";
+import MyRequest from "./request";
 
 export default function AddRetirer({close}) {
     const [motif, createMotif] = useState(null)
@@ -33,7 +34,7 @@ export default function AddRetirer({close}) {
 
     const router = useRouter();
     const refreshData = () => {
-        router.replace(router.asPath)
+        router.push({ pathname: router.pathname, query: { refresh: Date.now() } });
     }
 
 
@@ -47,12 +48,13 @@ export default function AddRetirer({close}) {
         }
         try {
             setLoading(true)
-            const res = await axios.post(url + '/api/entresorties', formData).finally(() => setLoading(false));
-            if (res.status === 200) {
-                await refreshData()
-                setDialog(false)
-            }
-            console.log(res.data)
+            MyRequest('entresorties', 'POST', formData, { 'Content-Type': 'application/json' })
+                .then(async (response) => {
+                    if (response.status === 200) {
+                        await refreshData()
+                        setDialog(false)
+                    }
+                }).finally(() => setLoading(false));
         } catch (e) {
             setError(true)
         }

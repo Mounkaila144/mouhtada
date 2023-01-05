@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Grid} from "@mui/material";
 import Paper from "@mui/material/Paper";
 import ItemCard from "../Components/itemCard";
@@ -9,24 +9,41 @@ import Circular from "../Components/Circular";
 import {blueGrey, yellow} from "@mui/material/colors";
 import PaidIcon from '@mui/icons-material/Paid';
 import CategoryIcon from '@mui/icons-material/Category';
+import {useRouter} from "next/router";
+import {UserContext} from "../Context/GlobalContext";
+import axios from "axios";
+import MyRequest from "../Components/request";
 
 
 function Dashboard() {
     const [data, setData] = useState(null);
+    const router = useRouter();
+    const {user,setUser}=useContext(UserContext)
+
+
     const Cfa = (price) => {
         return price.toLocaleString('fr-FR', {style: 'currency', currency: 'CFA'}).replace(',00', '');
     }
+
+    useEffect(() => {
+        if (!user) {
+            router.push('login');
+        }
+    }, [user])
+
     useEffect(() => {
         async function fetchData() {
-            const response = await fetch(url + '/api/dahboard');
-            const json = await response.json();
-            setData(json);
-        }
+            await MyRequest('dahboard', 'GET', {}, { 'Content-Type': 'application/json' })
+                .then(async (response) => {
+                    if (response.status === 200) {
+                        setData(response.data)
+                    }
+                }).catch( (e)=>alert(e) )
 
+        }
         // Fetch data every 5 seconds
-        const interval = setInterval(() => {
-            fetchData();
-        }, 5000);
+        fetchData()
+        const interval = setInterval(() => {fetchData();}, 5000);
 
         return () => clearInterval(interval);
     }, []);
@@ -161,6 +178,7 @@ function Dashboard() {
     } else {
         return <Circular/>
     }
+
 }
 
 export default Dashboard;

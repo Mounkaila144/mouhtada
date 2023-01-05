@@ -9,39 +9,47 @@ import Slide from '@mui/material/Slide';
 import Add from "./AddArticle";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import {useContext} from "react";
-import {DialogContext} from "../Context/GlobalContext";
+import {DialogCategorieContext, DialogContext} from "../Context/GlobalContext";
+import AddCategorie from "./AddCategorie";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function ArticleDialog({id}) {
-const {dialog,setDialog}=useContext(DialogContext)
+export default function CategorieDialog() {
+    const {dialogCategorie,setDialogCategorie}=useContext(DialogCategorieContext)
     const handleClickOpen = () => {
-        setDialog(true);
+        setDialogCategorie(true);
     };
 
     const handleClose = () => {
-        setDialog(false);
+        setDialogCategorie(false);
     };
 
     return (
         <div>
             <Button
+                sx={{
+                    position: 'fixed',
+                    top: 2,
+                    right: 2,
+                    zIndex: 1000,
+                    borderRadius:5
+                }}
                 startIcon={<AddCircleIcon/>} variant="contained" onClick={handleClickOpen}>
                 Ajouter
             </Button>
             <Dialog
 
-                open={dialog}
+                open={dialogCategorie}
                 TransitionComponent={Transition}
                 keepMounted
                 onClose={handleClose}
                 aria-describedby="alert-dialog-slide-description"
             >
-                <DialogTitle>{"Ajouter un nouveau article"}</DialogTitle>
+                <DialogTitle>{"Ajouter un nouveau Categorie"}</DialogTitle>
                 <DialogContent >
-                    <Add id={id}/>
+                    <AddCategorie/>
                 </DialogContent>
             </Dialog>
         </div>

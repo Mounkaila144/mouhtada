@@ -38,12 +38,13 @@ import Typography from "@mui/material/Typography";
 import InputAdornment from "@mui/material/InputAdornment";
 import FormData from "form-data";
 import Add from "../../Components/AddArticle";
+import MyRequest from "../../Components/request";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function Vente({articles}) {
+export default function Vente() {
     const router = useRouter()
     const [search, setsearch] = useState("   ");
     const [article, setMeuble] = useState([]);
@@ -53,11 +54,10 @@ export default function Vente({articles}) {
     const [sucess, setSucess] = useState(false);
     const initial = useRef(false);
     const {dialog, setDialog} = useContext(DialogContext)
-    const urlAll = url + '/api/articles'
 
     const handleClickOpen = () => {
         setDialog(true);
-        Searche(urlAll)
+        Searche()
     };
     const {emptyCart, isEmpty, items, inCart, addItem, updateItemQuantity, removeItem, cartTotal} = useCart();
     const handleClose = () => {
@@ -71,22 +71,19 @@ export default function Vente({articles}) {
     };
     const Searche = async (url) => {
 
-        axios
-            .get(url)
-            .then((res) => {
-                setMeuble(res.data);
-                if (res.status === 200) {
+        await MyRequest('articles?nom=' + search, 'Get', {}, { 'Content-Type': 'application/json' })
+            .then(async (response) => {
+                if (response.status === 200) {
+                    setMeuble(response.data);
+                    if (response.status === 200) {
+                    }
                 }
+            }).finally(() => setIsLoaded(false)).catch( (e)=>setError(true) )
 
-            }, (error) => {
-                setError(true);
-            })
-        console.log(article)
     }
-    const urls = url + '/api/articles?nom=' + search
     useEffect(() => {
         if (initial.current) {
-            Searche(urls)
+            Searche()
             window.scrollTo(0, 0);
         } else {
             initial.current = true
@@ -114,16 +111,17 @@ export default function Vente({articles}) {
             }
             try {
                 setIsLoaded(true)
-                const res = await axios.post(url + '/api/factures', formData).finally(() => setIsLoaded(false));
-                if (res.status === 200) {
-                    createAdresse("")
-                    createNom("")
-                    createPrenom("")
-                    emptyCart()
-                    setSucess(true)
+                await MyRequest('factures', 'POST', formData, { 'Content-Type': 'application/json' })
+                    .then(async (response) => {
+                        if (response.status === 200) {
+                            createAdresse("")
+                            createNom("")
+                            createPrenom("")
+                            emptyCart()
+                            setSucess(true)
 
-                }
-                console.log(res.data)
+                        }
+                    }).finally(() => setIsLoaded(false)).catch( (e)=>alert(e) )
             } catch (e) {
 
             }
@@ -171,7 +169,7 @@ export default function Vente({articles}) {
                                                 sx={{'&:last-child td, &:last-child th': {border: 0}}}
                                             >
                                                 <TableCell> <Image
-                                                    src={url + "/storage/meuble/" + articles.image}
+                                                    src={url + "/storage/article/" + articles.image}
                                                     width={50} height={50} style={{borderRadius: 8}}
                                                     alt={"image"}/></TableCell>
                                                 <TableCell component="th" scope="articles">
@@ -441,14 +439,5 @@ export default function Vente({articles}) {
 
 }
 
-export async function getServerSideProps() {
-    const res = await fetch(url + '/api/articles');
-    const articles = await res.json();
-
-    return {
-        props: {articles},
-    }
-
-}
 
 

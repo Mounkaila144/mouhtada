@@ -43,6 +43,7 @@ import {alpha} from "@mui/material/styles";
 import Tooltip from "@mui/material/Tooltip";
 import IconButton from "@mui/material/IconButton";
 import FilterListIcon from "@mui/icons-material/FilterList";
+import MyRequest from "../../Components/request";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -74,24 +75,15 @@ export default function removeStock({articles}) {
     const formErrorCLose = () => {
         setErrorForm(false);
     };
-    const Searche = async (url) => {
-
-        axios
-            .get(url)
-            .then((res) => {
-                setMeuble(res.data);
-                if (res.status === 200) {
-                }
-
-            }, (error) => {
-                setError(true);
-            })
-        console.log(article)
+    const Searche = async () => {
+        await MyRequest('historique/remove?nom=' + search, 'GET', {}, { 'Content-Type': 'application/json' })
+            .then((response) => {
+                setMeuble(response.data);
+            });
     }
-    const urls = url + '/api/historique/remove?nom=' + search
     useEffect(() => {
         if (initial.current) {
-            Searche(urls)
+            Searche()
             window.scrollTo(0, 0);
         } else {
             initial.current = true

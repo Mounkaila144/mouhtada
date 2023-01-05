@@ -8,7 +8,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import ListItem from '@mui/material/ListItem';
 import DashboardIcon from '@mui/icons-material/Dashboard';
-import {blue, blueGrey, grey} from "@mui/material/colors";
+import {blue, blueGrey, grey, orange, red} from "@mui/material/colors";
 import ButtonSide from "./ButtonSide";
 import HistoriqueMenu from "../HistoriqueBtn";
 import PaidIcon from '@mui/icons-material/Paid';
@@ -17,8 +17,14 @@ import PrintIcon from '@mui/icons-material/Print';
 import LibraryAddIcon from '@mui/icons-material/LibraryAdd';
 import RemoveCircleIcon from '@mui/icons-material/RemoveCircle';
 import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
-import {useContext} from "react";
-import {DialogContext, DrawerContext} from "../../Context/GlobalContext";
+import {useContext, useEffect} from "react";
+import {DialogContext, DrawerContext, UserContext} from "../../Context/GlobalContext";
+import {useRouter} from "next/router";
+import Button from "@mui/material/Button";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemButton from "@mui/material/ListItemButton";
+import LogoutIcon from '@mui/icons-material/Logout';
 
 const drawerWidth = 240;
 
@@ -72,40 +78,112 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 export default function Sidbare({content}) {
     const {open,setOpen}=useContext(DrawerContext)
+    const {user,setUser}=useContext(UserContext)
+    const router = useRouter();
 
+    useEffect(() => {
+    }, [user])
 
     const handleDrawerClose = () => {
         open? setOpen(false):setOpen(true);
     };
 
+    function logaout() {
+        localStorage.clear()
+        setUser(0)
+        router.push("/login")
+    }
+
+
     return (
-            <Drawer variant="permanent" open={open}>
-                <DrawerHeader
-                    sx={{backgroundColor: blueGrey[900],}}
-                >
-                    <IconButton onClick={handleDrawerClose}>
-                        {!open? <ChevronRightIcon  sx={{color: "white",}}/> : <ChevronLeftIcon sx={{color: "white",}}/>}
-                    </IconButton>
-                </DrawerHeader>
-                <Divider />
-                <List
-                    sx={{
-                        backgroundColor: blueGrey[900],
-                        height:"100vh"
-                    }}>
-                    <ListItem key={1} disablePadding sx={{ display: 'block' }}>
+        <Drawer variant="permanent" open={open}>
+            <DrawerHeader
+                sx={{backgroundColor: blueGrey[900],}}
+            >
+                <IconButton onClick={handleDrawerClose}>
+                    {!open ? <ChevronRightIcon sx={{color: "white",}}/> : <ChevronLeftIcon sx={{color: "white",}}/>}
+                </IconButton>
+            </DrawerHeader>
+            <Divider/>
+            <List
+                sx={{
+                    backgroundColor: blueGrey[900],
+                    height: "100vh"
+                }}>
+                {user===2?
+                    <ListItem key={1} disablePadding sx={{display: 'block'}}>
                         <ButtonSide text={"Dashboard"} open={open} icon={<DashboardIcon/>} link={"/"}/>
-                        <ButtonSide text={"Articles"} open={open} icon={<CategoryIcon/>} link={"/articles/articles"}/>
-                        <ButtonSide text={"Ventes des articles"} open={open} icon={<PaidIcon/>} link={"/articles/vente"}/>
-                        <ButtonSide text={"Factures des ventes"} open={open} icon={<PrintIcon/>} link={"/factures/factures"}/>
-                        <ButtonSide text={"AJouter de l'argent"} open={open} icon={<LibraryAddIcon/>} link={"/ajouter/ajouter"}/>
-                        <ButtonSide text={"Retirer de l'argent"} open={open} icon={<RemoveCircleIcon/>} link={"/retirer/retirer"}/>
+                        <ButtonSide text={"Articles"} open={open} icon={<CategoryIcon/>} link={"/articles/categorie"}/>
+                        <ButtonSide text={"Ventes des articles"} open={open} icon={<PaidIcon/>}
+                                    link={"/articles/vente"}/>
+                        <ButtonSide text={"Factures des ventes"} open={open} icon={<PrintIcon/>}
+                                    link={"/factures/factures"}/>
+                        <ButtonSide text={"AJouter de l'argent"} open={open} icon={<LibraryAddIcon/>}
+                                    link={"/ajouter/ajouter"}/>
+                        <ButtonSide text={"Retirer de l'argent"} open={open} icon={<RemoveCircleIcon/>}
+                                    link={"/retirer/retirer"}/>
                         <HistoriqueMenu text={"historique"} icon={<FormatListBulletedIcon/>}/>
+                        <ListItemButton sx={{
+                                color: "white",
+                                minHeight: 3,
+                                borderRadius: 5,
+                                background: red[700],
+                                justifyContent: 'initial',
+                                px: 2.5,
+                                '&:hover': {
+                                    background: orange[800],
+                                    borderRadius: 5,
+                                },
+                                margin:1,boxShadow:3
+                            }} onClick={logaout}><ListItemIcon sx={{
+                                    color: "white",
+                                    minWidth: 0,
+                                    mr: 1,
+                                    justifyContent: 'center',
+                                }}>
+                                <LogoutIcon/>
+                            </ListItemIcon><ListItemText sx={{marginLeft:1}} primary={"Deconnexion"} /></ListItemButton>
                     </ListItem>
-                </List>
-                <Divider />
+                    :user===1?
+                    <ListItem key={1} disablePadding sx={{display: 'block'}}>
+                        <ButtonSide text={"Dashboard"} open={open} icon={<DashboardIcon/>} link={"/"}/>
+                        <ButtonSide text={"Articles"} open={open} icon={<CategoryIcon/>} link={"/articles/categorie"}/>
+                        <ButtonSide text={"Ventes des articles"} open={open} icon={<PaidIcon/>}
+                                    link={"/articles/vente"}/>
+                        <ButtonSide text={"Factures des ventes"} open={open} icon={<PrintIcon/>}
+                                    link={"/factures/factures"}/>
+                        <HistoriqueMenu text={"historique"} icon={<FormatListBulletedIcon/>}/>
+                        <ListItemButton sx={{
+                            color: "white",
+                            minHeight: 3,
+                            borderRadius: 5,
+                            background: red[700],
+                            justifyContent: 'initial',
+                            px: 2.5,
+                            '&:hover': {
+                                background: orange[800],
+                                borderRadius: 5,
+                            },
+                            margin:1,boxShadow:3
+                        }} onClick={logaout}>
+                            <ListItemIcon
+                                sx={{
+                                    color: "white",
+                                    minWidth: 0,
+                                    mr: 1,
+                                    justifyContent: 'center',
+                                }}
+                            >
+                                <LogoutIcon/>
+                            </ListItemIcon>
+                            <ListItemText sx={{marginLeft:1}} primary={"Deconnexion"} />
+                        </ListItemButton>
+                    </ListItem>:null
 
-            </Drawer>
+                }
+            </List>
+            <Divider/>
 
+        </Drawer>
     );
 }

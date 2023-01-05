@@ -26,16 +26,16 @@ export default function HistoriqueMenu({text,icon}) {
                     color: "white",
                     minHeight: 3,
                     borderRadius: 5,
-                    background: blueGrey[700],
+                    background:  open?blue[800]: blueGrey[700],
                     justifyContent: 'initial',
                     px: 2.5,
                     '&:hover': {
-                        background: blue[800],
+                        background: open?blue[800]: blueGrey[500],
                         borderRadius: 5,
                     },
                     margin:1,boxShadow:3
                 }}
-                onClick={handleClick}
+                onClick={open?null:handleClick}
             >
                 <ListItemIcon
                     sx={{
@@ -58,17 +58,27 @@ export default function HistoriqueMenu({text,icon}) {
                     'aria-labelledby': 'basic-button',
                 }}
             >
-                <MenuItem sx={{color: "white", maxHeight: 100, borderRadius: 5, background: blueGrey[700], justifyContent: 'initial', px: 2.5, '&:hover': {background: blue[800], borderRadius: 5,}, margin:1,boxShadow:3}}
-                          onClick={()=>router.push("/historique/vente")}>Ventes</MenuItem>
-                <MenuItem sx={{color: "white", maxHeight: 100, borderRadius: 5, background: blueGrey[700], justifyContent: 'initial', px: 2.5, '&:hover': {background: blue[800], borderRadius: 5,}, margin:1,boxShadow:3}}
-                          onClick={()=>router.push("/historique/addStock")}>Ajouts au Stocks</MenuItem>
-                <MenuItem sx={{color: "white", maxHeight: 100, borderRadius: 5, background: blueGrey[700], justifyContent: 'initial', px: 2.5, '&:hover': {background: blue[800], borderRadius: 5,}, margin:1,boxShadow:3}}
-                          onClick={()=>router.push("/historique/removeStock")}>Duminition au Stocks</MenuItem>
+                <MenuItem sx={{color: "white", maxHeight: 100, borderRadius: 5, background: router.pathname==="/historique/vente"?blue[800]: blueGrey[700], justifyContent: 'initial', px: 2.5, '&:hover': {background: blue[800], borderRadius: 5,}, margin:1,boxShadow:3}}
+                          onClick={()=> {
+                              router.pathname==="/historique/vente"?null:router.push("/historique/vente")
+                          }}>Ventes</MenuItem>
+                <MenuItem sx={{color: "white", maxHeight: 100, borderRadius: 5, background: router.pathname==="/historique/addStock"?blue[800]: blueGrey[700], justifyContent: 'initial', px: 2.5, '&:hover': {background: blue[800], borderRadius: 5,}, margin:1,boxShadow:3}}
+                          onClick={()=> {
+                              router.pathname==="/historique/addStock"?null:router.push("/historique/addStock")
+                          }}>Ajouts au Stocks</MenuItem>
+                <MenuItem sx={{color: "white", maxHeight: 100, borderRadius: 5, background: router.pathname==="/historique/removeStock"?blue[800]: blueGrey[700], justifyContent: 'initial', px: 2.5, '&:hover': {background: blue[800], borderRadius: 5,}, margin:1,boxShadow:3}}
+                          onClick={()=> {
+                              router.pathname==="/historique/removeStock"?null:router.push("/historique/removeStock")
+                          }}>Duminition au Stocks</MenuItem>
 
-                <MenuItem sx={{color: "white", maxHeight: 100, borderRadius: 5, background: blueGrey[700], justifyContent: 'initial', px: 2.5, '&:hover': {background: blue[800], borderRadius: 5,}, margin:1,boxShadow:3}}
-                          onClick={()=>router.push("/historique/prixStock")}>Modification des Prix</MenuItem>
-                <MenuItem sx={{color: "white", maxHeight: 100, borderRadius: 5, background: blueGrey[700], justifyContent: 'initial', px: 2.5, '&:hover': {background: blue[800], borderRadius: 5,}, margin:1,boxShadow:3}}
-                          onClick={()=>router.push("/historique/delectStock")}>Supression de articles</MenuItem>
+                <MenuItem sx={{color: "white", maxHeight: 100, borderRadius: 5, background: router.pathname==="/historique/prixStock"?blue[800]: blueGrey[700], justifyContent: 'initial', px: 2.5, '&:hover': {background: blue[800], borderRadius: 5,}, margin:1,boxShadow:3}}
+                          onClick={()=> {
+                              router.pathname==="/historique/prixStock"?null:router.push("/historique/prixStock")
+                          }}>Modification des Prix</MenuItem>
+                <MenuItem sx={{color: "white", maxHeight: 100, borderRadius: 5, background: router.pathname==="/historique/delectStock"?blue[800]: blueGrey[700], justifyContent: 'initial', px: 2.5, '&:hover': {background: blue[800], borderRadius: 5,}, margin:1,boxShadow:3}}
+                          onClick={()=> {
+                              router.pathname==="/historique/delectStock"?null:router.push("/historique/delectStock")
+                          }}>Supression de articles</MenuItem>
             </Menu>
         </div>
     );

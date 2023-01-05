@@ -13,16 +13,18 @@ export default function ButtonSide({text,icon,link,open}) {
                 color: "white",
                 minHeight: 3,
                 borderRadius: 5,
-                background: blueGrey[700],
+                background: router.pathname===link?blue[800]: blueGrey[700],
                 justifyContent: open ? 'initial' : 'center',
                 px: 2.5,
                 '&:hover': {
-                    background: blue[800],
+                    background:  router.pathname===link?blue[800]: blueGrey[500],
                     borderRadius: 5,
                 },
                 margin:1,boxShadow:3
             }}
-            onClick={()=>router.push(link)}
+            onClick={()=> {
+                router.pathname===link?null:router.push(link)
+            }}
         >
             <ListItemIcon
                 sx={{

@@ -1,23 +1,16 @@
-import Home, {getPostData} from "../../Components/articles";
 import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
-import Add from "../../Components/AddArticle";
 import Dialog from "@mui/material/Dialog";
 import * as React from "react";
 import Slide from "@mui/material/Slide";
 import {useRouter} from "next/router";
-import Page from "../index";
-import ArticleDialog from "../../Components/Dialog";
-import Edit from "../../Components/EditArticle";
-import {Backdrop, CircularProgress} from "@mui/material";
-import {useContext, useEffect, useRef, useState} from "react";
-import url from "../../Components/global";
-import {UserContext} from "../../Context/GlobalContext";
-import MyRequest from "../../Components/request";
+import {Backdrop} from "@mui/material";
+import Home from "../../articles/categorie";
+import Edit from "../../../Components/EditArticle";
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
-export default function Article() {
+export default function EditCategorie() {
     const router = useRouter();
     const { id } = router.query;
     const [open, setOpen] = React.useState(true);
@@ -51,7 +44,7 @@ export default function Article() {
                     onClose={handleClose}
                     aria-describedby="alert-dialog-slide-description"
                 >
-                    <DialogTitle>{"Modifier un article"}</DialogTitle>
+                    <DialogTitle>{"Modifier une Categorie"}</DialogTitle>
                     <DialogContent>
                         <Edit id={id}/>
                     </DialogContent>
@@ -63,7 +56,7 @@ export default function Article() {
             </>)
     }
 }
-Article.getInitialProps = async (context) => {
+EditCategorie.getInitialProps = async (context) => {
     const { id } = context.query;
     return { id };
 };
