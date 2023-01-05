@@ -344,7 +344,6 @@ export default function FactureTable({rows}) {
                 <Paper sx={{width: '100%', mb: 2}}>
                     <EnhancedTableToolbar numSelected={selected}/>
                     <TableContainer>
-                        <ArticleDialog/>
 
                         <Table
                             sx={{minWidth: 950}}
