@@ -69,7 +69,7 @@ function Dashboard() {
                                         borderRadius: 2,
                                         boxShadow: 3,
                                         marginTop: -5
-                                    }}/>} text={"Récette Journalier"} number={Cfa(data.recetJour)}/>
+                                    }}/>} text={"Recette Journalière"} number={Cfa(data.recetJour)}/>
                                 </Grid>
 
                                 <Grid item xs={4}>
@@ -80,7 +80,7 @@ function Dashboard() {
                                         borderRadius: 2,
                                         boxShadow: 3,
                                         marginTop: -5
-                                    }}/>} text={"Recette Mensielle"} number={Cfa(data.recetMoi)}/>
+                                    }}/>} text={"Recette Mensuelle"} number={Cfa(data.recetMoi)}/>
                                 </Grid>
 
                                 <Grid item xs={4}>
@@ -91,7 +91,7 @@ function Dashboard() {
                                         borderRadius: 2,
                                         boxShadow: 3,
                                         marginTop: -5
-                                    }}/>} text={"Nombre de Article"} number={data.TotalArticle}/>
+                                    }}/>} text={"Nombre d'article"} number={data.TotalArticle}/>
                                 </Grid>
                                 <Grid item xs={4}><ItemCard icon={<PaidIcon sx={{
                                     fontSize: 60,
@@ -100,7 +100,7 @@ function Dashboard() {
                                     borderRadius: 2,
                                     boxShadow: 3,
                                     marginTop: -5
-                                }}/>} text={"Benefice Jounalier"} number={Cfa(data.beneficeJour)}/></Grid>
+                                }}/>} text={"Benefice Journalière"} number={Cfa(data.beneficeJour)}/></Grid>
                                 <Grid item xs={4}><ItemCard icon={<PaidIcon sx={{
                                     fontSize: 60,
                                     color: "white",
@@ -108,7 +108,7 @@ function Dashboard() {
                                     borderRadius: 2,
                                     boxShadow: 3,
                                     marginTop: -5
-                                }}/>} text={"Benefice Mensielle"} number={Cfa(data.beneficeMoi)}/></Grid>
+                                }}/>} text={"Benefice Mensuelle"} number={Cfa(data.beneficeMoi)}/></Grid>
                                 <Grid item xs={4}><ItemCard icon={<CategoryIcon sx={{
                                     fontSize: 60,
                                     color: "white",
@@ -116,7 +116,7 @@ function Dashboard() {
                                     borderRadius: 2,
                                     boxShadow: 3,
                                     marginTop: -5
-                                }}/>} text={"Nombre De article Vendue"} number={data.articleVendue}/></Grid>
+                                }}/>} text={"Nombre D'article Vendue"} number={data.articleVendue}/></Grid>
                                 <Grid item xs={4}><ItemCard icon={<PaidIcon sx={{
                                     fontSize: 60,
                                     color: "white",
