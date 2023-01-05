@@ -32,7 +32,7 @@ function Dashboard() {
                     if (response.status === 200) {
                         setData(response.data)
                     }
-                }).catch( (e)=>alert(e) )
+                })
 
         }
         // Fetch data every 5 seconds
