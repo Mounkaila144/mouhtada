@@ -21,19 +21,7 @@ export default function Home() {
     }, [router.query]);
     return (
         <>
-                        <CategorieDialog/>
 
-                <Grid container spacing={{xs: 1, md: 2}} columns={{xs: 12, sm: 12, md: 12}}>
-                    {data.slice(0, 18).map((categories) => (
-                        <Grid item xs={6} sm={4} md={3}>
-
-                            <CategorieCard sx={{boxShadow: 6,}}
-                                           categories={categories}
-                            />
-                        </Grid>
-
-                    ))}
-                </Grid>
 
         </>
 
