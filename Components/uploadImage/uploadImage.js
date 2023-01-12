@@ -27,7 +27,7 @@ export function UploadImage({image}) {
                 onChange={onChange}
                 maxNumber={1}
                 dataURLKey="data_url"
-                acceptType={["jpg","png"]}
+                acceptType={["jpg","png","jpeg"]}
             >
                 {({
                       imageList,
