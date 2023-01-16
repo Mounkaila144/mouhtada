@@ -123,8 +123,6 @@ export default function Sidbare({content}) {
 
                         <ButtonSide text={"Factures des ventes"} open={open} icon={<PrintIcon/>}
                                     link={"/factures/factures"}/>
-                        <ButtonSide text={"AJouter de l'argent"} open={open} icon={<LibraryAddIcon/>}
-                                    link={"/ajouter/ajouter"}/>
                         <ButtonSide text={"Retirer de l'argent"} open={open} icon={<RemoveCircleIcon/>}
                                     link={"/retirer/retirer"}/>
                         <HistoriqueMenu text={"historique"} icon={<FormatListBulletedIcon/>}/>
@@ -161,6 +159,8 @@ export default function Sidbare({content}) {
                                     link={"/articles/listreservation"}/>
                         <ButtonSide text={"Factures des ventes"} open={open} icon={<PrintIcon/>}
                                     link={"/factures/factures"}/>
+                        <ButtonSide text={"Retirer de l'argent"} open={open} icon={<RemoveCircleIcon/>}
+                                    link={"/retirer/retirer"}/>
                         <HistoriqueMenu text={"historique"} icon={<FormatListBulletedIcon/>}/>
                         <ListItemButton sx={{
                             color: "white",
