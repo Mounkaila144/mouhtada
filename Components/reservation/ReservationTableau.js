@@ -36,7 +36,9 @@ import {useState} from "react";
 import Circular from "../Circular";
 import ErrorPage from "../ErrorPage";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
-import RetirerDialog from "../RetirerDialog";
+import DialogReservation from "./DialogResrvation";
+import MyRequest from "../request";
+import AddPayement from "./AddPayement";
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -69,23 +71,49 @@ function stableSort(array, comparator) {
 
 const headCells = [
     {
+        id: 'id',
+        numeric: true,
+        disablePadding: true,
+        label: 'N°',
+    },
+    {
         id: 'name',
         numeric: true,
         disablePadding: true,
-        label: 'Somme retirer',
+        label: 'Nom',
     },
     {
         id: 'calories',
         numeric: true,
         disablePadding: false,
-        label: 'Motif',
+        label: 'Prenom',
     },
     {
-        id: 'protein',
+        id: 'carbs',
+        numeric: true,
+        disablePadding: false,
+        label: "Adresse",
+    },
+    {
+        id: 'vendue',
         numeric: true,
         disablePadding: false,
         label: "Date",
     },
+    {
+        id: 'vendue',
+        numeric: true,
+        disablePadding: false,
+        label: "Ajouter un payement",
+    },
+
+    {
+        id: 'restant',
+        numeric: true,
+        disablePadding: false,
+        label: "voir le contenue",
+    },
+
 
 ];
 
@@ -99,21 +127,9 @@ function EnhancedTableHead(props) {
     return (
         <TableHead>
             <TableRow>
-                <TableCell padding="checkbox">
-                    <Checkbox
-                        color="primary"
-                        indeterminate={numSelected > 0 && numSelected < rowCount}
-                        checked={rowCount > 0 && numSelected === rowCount}
-                        onChange={onSelectAllClick}
-                        inputProps={{
-                            'aria-label': 'select all desserts',
-                        }}
-                    />
-                </TableCell>
                 {headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}
-                        align={headCell.numeric ? 'right' : 'left'}
                         padding={headCell.disablePadding ? 'none' : 'normal'}
                         sortDirection={orderBy === headCell.id ? order : false}
                     >
@@ -158,7 +174,7 @@ function EnhancedTableToolbar(props) {
     console.log(data)
     const removeSelect = async () => {
         setLoading(true)
-        const res = await axios.post(url + '/api/entresortis', {"data":data})
+        await MyRequest('reservations/1', 'DELETE', {"data":data}, { 'Content-Type': 'application/json' })
             .then(function (response) {
                 if(response.status===200){
                     numSelected.length=0
@@ -204,7 +220,7 @@ function EnhancedTableToolbar(props) {
                         id="tableTitle"
                         component="div"
                     >
-                        Retirer de l'argent dans la caisse
+                        Reservation
                     </Typography>
                 )}
 
@@ -229,7 +245,7 @@ function EnhancedTableToolbar(props) {
 EnhancedTableToolbar.propTypes = {
     numSelected: PropTypes.number.isRequired,
 };
-export default function RetirerTable({rows}) {
+export default function ReservationTable({rows}) {
     const router = useRouter()
     const refreshData=()=>{
         router.replace(router.asPath)
@@ -247,7 +263,7 @@ export default function RetirerTable({rows}) {
     const [add, setAdd] = useState(null)
     const Submitremove = async (id) => {
         setLoading(true)
-        const res = await axios.post(url + '/api/articles/remove/'+id, {"remove":remove})
+        const res = await axios.post(url + '/api/reservations/remove/'+id, {"remove":remove})
             .then(function (response) {
                 if(response.status===200){
                     refreshData();
@@ -259,7 +275,7 @@ export default function RetirerTable({rows}) {
     };
     const Submitadd = async (id) => {
         setLoading(true)
-        const res = await axios.post(url + '/api/articles/remove/'+id, {"remove":add})
+        const res = await axios.post(url + '/api/reservations/remove/'+id, {"remove":add})
             .then(function (response) {
                 if(response.status===200){
                     refreshData();
@@ -323,6 +339,19 @@ export default function RetirerTable({rows}) {
     const closeAdd=()=>{
         setOpen(false)
     }
+    const vendue = async (id) => {
+        setLoading(true)
+        await MyRequest('reservations/vente/'+id, 'POST', {}, { 'Content-Type': 'application/json' })
+            .then(function (response) {
+                if(response.status===200){
+                    refreshData();
+                }
+            })
+            .finally(()=> {
+                setLoading(false)
+            })
+    };
+
 
     const isSelected = (name) => selected.indexOf(name) !== -1;
 
@@ -331,7 +360,7 @@ export default function RetirerTable({rows}) {
         page > 0 ? Math.max(0, (1 + page) * rowsPerPage - rows.length) : 0;
     if (loading) {
         return (
-                <Circular/>
+            <Circular/>
         )
     } else {
         return (
@@ -339,7 +368,6 @@ export default function RetirerTable({rows}) {
                 <Paper sx={{width: '100%', mb: 2}}>
                     <EnhancedTableToolbar numSelected={selected}/>
                     <TableContainer>
-                        <RetirerDialog/>
 
                         <Table
                             sx={{minWidth: 950}}
@@ -365,14 +393,20 @@ export default function RetirerTable({rows}) {
                                         const fullDate = row.created_at;
                                         const date = new Date(fullDate);
                                         const shortDate = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()} ${date.getHours()}h:${date.getMinutes()}:${date.getSeconds()}`;
+                                        const contenue=JSON.parse(row.contenue)
+                                        let total=0
+                                        contenue.map((value)=>{
+                                            total=total+value["itemTotal"]
 
+                                        })
+                                        const rest=total-row.payer
                                         return (
                                             <TableRow
                                                 hover
                                                 onClick={(event) => handleClick(event, row.id)}
                                                 onDoubleClick={() => {
                                                     setLoading(true)
-                                                    router.push("/articles/" + row.id)
+                                                    router.push("/reservations/" + row.id)
 
                                                 }}
                                                 role="checkbox"
@@ -381,20 +415,26 @@ export default function RetirerTable({rows}) {
                                                 key={row.id}
                                                 selected={isItemSelected}
                                             >
-                                                <TableCell padding="checkbox">
-                                                    <Checkbox
-                                                        color="primary"
-                                                        checked={isItemSelected}
-                                                        inputProps={{
-                                                            'aria-labelledby': labelId,
-                                                        }}
-                                                    />
+                                                <TableCell >#0{row.id}</TableCell>
+                                                <TableCell >{row.nom}</TableCell>
+                                                <TableCell >
+                                                    {row.prenom}
                                                 </TableCell>
-                                                <TableCell align="right">{row.prix} CFA</TableCell>
-                                                <TableCell align="right">
-                                                    {row.motif}
+                                                <TableCell >{row.adresse}</TableCell>
+                                                <TableCell >{shortDate}</TableCell>
+                                                <TableCell >
+                                                    {rest===0?
+                                                        <Button
+                                                            onClick={()=>vendue(row.id)}
+                                                            variant="contained">
+                                                            vendue
+                                                        </Button>    :
+                                                    <AddPayement id={row.id}/>}
                                                 </TableCell>
-                                                <TableCell align="right">{shortDate}</TableCell>
+                                                <TableCell>
+                                                    <DialogReservation contenue={contenue} total={total} payer={row.payer} rest={rest}/>
+
+                                                </TableCell>
                                             </TableRow>
                                         );
                                     })}

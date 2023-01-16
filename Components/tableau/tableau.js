@@ -37,6 +37,8 @@ import Circular from "../Circular";
 import ErrorPage from "../ErrorPage";
 import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 import {UserContext} from "../../Context/GlobalContext";
+import MyRequest from "../request";
+import EditArticle from "../articles/editArticle";
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) {
@@ -183,7 +185,7 @@ function EnhancedTableToolbar(props) {
     console.log(data)
     const removeSelect = async () => {
         setLoading(true)
-        const res = await axios.post(url + '/api/articles/delect', {"data":data})
+        await MyRequest('articles/delect', 'POST', {"data":data}, { 'Content-Type': 'application/json' })
             .then(function (response) {
                 if(response.status===200){
                     numSelected.length=0
@@ -434,9 +436,7 @@ export default function EnhancedTable({rows,id}) {
                                                 <TableCell align="right">{row.stock}</TableCell>
                                                 {user===2?
                                                     <TableCell>
-                                                        <Button variant={"contained"}
-                                                                sx={{ borderRadius: 2}}
-                                                                onClick={() =>router.push("/stocks/" + row.id)}>Operation</Button>
+                                                        <EditArticle id={row.id}/>
 
 
                                                     </TableCell> :null

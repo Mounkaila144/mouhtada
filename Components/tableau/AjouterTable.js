@@ -205,7 +205,7 @@ function EnhancedTableToolbar(props) {
                         id="tableTitle"
                         component="div"
                     >
-                        Articles
+                        Ajouter de l'argent dans la caisse
                     </Typography>
                 )}
 

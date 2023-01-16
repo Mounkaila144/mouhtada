@@ -3,6 +3,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import { useRouter } from 'next/router'
 import ListItemText from "@mui/material/ListItemText";
 import ListItemButton from "@mui/material/ListItemButton";
+import Box from "@mui/material/Box";
 
 export default function ButtonSide({text,icon,link,open}) {
     const router = useRouter()
@@ -36,7 +37,9 @@ export default function ButtonSide({text,icon,link,open}) {
             >
                 {icon}
             </ListItemIcon>
-            <ListItemText primary={text} sx={{ opacity: open ? 1 : 0 }} />
+            <Box sx={{ opacity: open ? 1 : 0 }}>
+                {text}
+            </Box>
         </ListItemButton>
     );
 }

@@ -44,7 +44,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function Vente() {
+export default function Reservation() {
     const router = useRouter()
     const [search, setsearch] = useState("   ");
     const [article, setMeuble] = useState([]);
@@ -54,7 +54,9 @@ export default function Vente() {
     const [sucess, setSucess] = useState(false);
     const initial = useRef(false);
     const {dialog, setDialog} = useContext(DialogContext)
-
+    const Cfa = (price) => {
+        return price.toLocaleString('fr-FR', {style: 'currency', currency: 'CFA'}).replace(',00', '');
+    }
     const handleClickOpen = () => {
         setDialog(true);
         Searche()
@@ -92,11 +94,12 @@ export default function Vente() {
     }, [search])
     const [nom, createNom] = useState("")
     const [prenom, createPrenom] = useState("")
+    const [payer, createPayer] = useState(0)
     const [adresse, createAdresse] = useState("")
     const [errorForm, setErrorForm] = useState(false)
     const onSubmit = async (e) => {
         e.preventDefault()
-        if (nom.length<3 || prenom.length<3 || adresse.length<3){
+        if (nom.length<3 || prenom.length<3 || adresse.length<3 || adresse<1000){
 
             setErrorForm(true)
         }else {
@@ -105,21 +108,23 @@ export default function Vente() {
             const formData = {
                 "nom": nom,
                 "prenom": prenom,
+                "payer": payer,
                 "adresse": adresse,
                 "contenue": items,
                 "user_id": 1
             }
             try {
                 setIsLoaded(true)
-                await MyRequest('factures', 'POST', formData, { 'Content-Type': 'application/json' })
+                await MyRequest('reservations', 'POST', formData, { 'Content-Type': 'application/json' })
                     .then(async (response) => {
                         if (response.status === 200) {
                             createAdresse("")
                             createNom("")
                             createPrenom("")
+                            createPayer("")
                             emptyCart()
                             setSucess(true)
-                            router.push("/factures/factures")
+                            router.push("/articles/listreservation")
 
                         }
                     }).finally(() => setIsLoaded(false)).catch( (e)=>alert(e) )
@@ -176,7 +181,7 @@ export default function Vente() {
                                                 <TableCell component="th" scope="articles">
                                                     {articles.nom}
                                                 </TableCell>
-                                                <TableCell>{articles.prixVente}</TableCell>
+                                                <TableCell>{Cfa(articles.prixVente)}</TableCell>
                                                 <TableCell>{articles.stock}</TableCell>
                                                 <TableCell>
                                                     <Button
@@ -221,7 +226,7 @@ export default function Vente() {
                                         <TableCell>Nom</TableCell>
                                         <TableCell>Prix de vente</TableCell>
                                         <TableCell>Quantité du Stock</TableCell>
-                                        <TableCell>Quantité a vendre</TableCell>
+                                        <TableCell>Quantité a reserver</TableCell>
                                         <TableCell>Prix Total</TableCell>
                                         <TableCell align={"right"}>
                                             <Button
@@ -378,11 +383,27 @@ export default function Vente() {
                                     />
                                 </FormControl>
                             </Grid>
+                            <Grid item xs={3}>
+                                <FormControl sx={{m: 1, width: '30ch'}} variant="outlined">
+                                    <OutlinedInput
+                                        sx={{height: '5ch', boxShadow: 3, borderRadius: 2,backgroundColor:"white"}}
+                                        id="Payer"
+                                        onChange={(event) => {
+                                            createPayer(event.target.value)
+                                        }}
+                                        placeholder={"Somme Payer"}
+                                        aria-describedby="Payer"
+                                        inputProps={{
+                                            'aria-label': 'weight',
+                                        }}
+                                    />
+                                </FormControl>
+                            </Grid>
                             <Grid item xs={3} display="flex"
                                   justifyContent="center"
                                   alignItems="center" >
 
-                                <Button onClick={onSubmit} variant={"contained"} sx={{fontSize:20}} startIcon={<BeenhereIcon/>}>Vendue</Button>
+                                <Button onClick={onSubmit} variant={"contained"} sx={{fontSize:20}} startIcon={<BeenhereIcon/>}>Reserver</Button>
                             </Grid>
 
                         </Grid>
@@ -411,6 +432,7 @@ export default function Vente() {
                             {nom.length<3?<Box > nom </Box>:null}
                             {prenom.length<3?<Box > prenom </Box>:null}
                             {adresse.length<3?<Box > adresse </Box>:null}
+                            {payer.length<1000?<Box > Somme payer </Box>:null}
                             <strong> sont ivalide!</strong>
 
                         </Alert>
@@ -428,7 +450,7 @@ export default function Vente() {
                     <DialogContent >
                         <Alert severity="success">
                             <AlertTitle>Sucesse</AlertTitle>
-                            La vente a bien
+                            La reservation a bien
                             <strong> été enregistrer</strong>
 
                         </Alert>

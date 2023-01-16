@@ -116,6 +116,11 @@ export default function Sidbare({content}) {
                         <ButtonSide text={"Articles"} open={open} icon={<CategoryIcon/>} link={"/categorie/categorie"}/>
                         <ButtonSide text={"Ventes des articles"} open={open} icon={<PaidIcon/>}
                                     link={"/articles/vente"}/>
+                        <ButtonSide text={"faire une Reservations"} open={open} icon={<PaidIcon/>}
+                                    link={"/articles/reservation"}/>
+                        <ButtonSide text={"List des Reservations"} open={open} icon={<PaidIcon/>}
+                                    link={"/articles/listreservation"}/>
+
                         <ButtonSide text={"Factures des ventes"} open={open} icon={<PrintIcon/>}
                                     link={"/factures/factures"}/>
                         <ButtonSide text={"AJouter de l'argent"} open={open} icon={<LibraryAddIcon/>}
@@ -150,6 +155,10 @@ export default function Sidbare({content}) {
                         <ButtonSide text={"Articles"} open={open} icon={<CategoryIcon/>} link={"/categorie/categorie"}/>
                         <ButtonSide text={"Ventes des articles"} open={open} icon={<PaidIcon/>}
                                     link={"/articles/vente"}/>
+                        <ButtonSide text={"faire une Reservations"} open={open} icon={<PaidIcon/>}
+                                    link={"/articles/reservation"}/>
+                        <ButtonSide text={"List des Reservations"} open={open} icon={<PaidIcon/>}
+                                    link={"/articles/listreservation"}/>
                         <ButtonSide text={"Factures des ventes"} open={open} icon={<PrintIcon/>}
                                     link={"/factures/factures"}/>
                         <HistoriqueMenu text={"historique"} icon={<FormatListBulletedIcon/>}/>
