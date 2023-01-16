@@ -436,13 +436,7 @@ export default function ReservationTable({rows}) {
 
                                                 </TableCell>
                                                 <TableCell >
-                                                    {rest===0?
-                                                        <Button
-                                                            onClick={()=>vendue(row.id)}
-                                                            variant="contained">
-                                                            vendue
-                                                        </Button>    :
-                                                    <AddPayement id={row.id}/>}
+                                                    <AddPayement id={row.id}/>
                                                 </TableCell>
                                                 <TableCell>
                                                     <DialogReservation contenue={contenue} total={total} payer={row.payer} rest={rest}/>
