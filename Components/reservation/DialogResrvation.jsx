@@ -321,7 +321,7 @@ export default function DialogReservation({contenue,total,payer,rest}) {
                                 </TableRow>
                             </TableBody>
                         </Table>
-                        <Box sx={{fontFamily:"bold",fontSize:20}}>le client a donné <span style={{color:"blue"}}> {Cfa(parseInt(payer))}</span>  et il lui rest a payé <span style={{color:"red"}}>{Cfa(rest)}</span></Box>
+                        <Box sx={{fontFamily:"bold",fontSize:20}}>le client a donné <span style={{color:"blue"}}> {Cfa(parseInt(payer))}</span>  et il lui rest a payer <span style={{color:"red"}}>{Cfa(rest)}</span></Box>
 
                     </TableContainer>
                 </DialogContent>

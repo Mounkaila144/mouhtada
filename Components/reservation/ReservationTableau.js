@@ -100,6 +100,13 @@ const headCells = [
         disablePadding: false,
         label: "Date",
     },
+     {
+        id: 'vendue',
+        numeric: true,
+        disablePadding: false,
+        label: "Generer une facture",
+    },
+
     {
         id: 'vendue',
         numeric: true,
@@ -422,6 +429,12 @@ export default function ReservationTable({rows}) {
                                                 </TableCell>
                                                 <TableCell >{row.adresse}</TableCell>
                                                 <TableCell >{shortDate}</TableCell>
+                                                <TableCell >
+                                                    <Button variant={"contained"}
+                                                            sx={{ borderRadius: 2}}
+                                                            onClick={() =>router.push(url+'/api/reservations/' + row.id)}>Generer</Button>
+
+                                                </TableCell>
                                                 <TableCell >
                                                     {rest===0?
                                                         <Button
