@@ -96,6 +96,7 @@ export default function Reservation() {
     const [prenom, createPrenom] = useState("")
     const [payer, createPayer] = useState(0)
     const [adresse, createAdresse] = useState("")
+    const [dimunie, createDimunie] = useState(0)
     const [errorForm, setErrorForm] = useState(false)
     const onSubmit = async (e) => {
         e.preventDefault()
@@ -110,6 +111,7 @@ export default function Reservation() {
                 "prenom": prenom,
                 "payer": payer,
                 "adresse": adresse,
+                "dimunie": dimunie,
                 "contenue": items,
                 "user_id": 1
             }
@@ -334,84 +336,114 @@ export default function Reservation() {
                         </TableContainer>
                 {!isEmpty ?
                     <>
-                        <Grid container rowSpacing={1} columnSpacing={{xs: 1, sm: 2, md: 3}}>
-                            <Grid item xs={3}>
-                                <FormControl sx={{m: 1, width: '20ch'}} variant="filled">
+                        <Grid container spacing={1}>
+                            <Grid item xs={12} sm={6} md={3}>
+                                <FormControl fullWidth variant="filled">
                                     <OutlinedInput
-                                        sx={{height: '5ch', width: '30ch', boxShadow: 3, borderRadius: 2,backgroundColor:"white"}}
+                                        fullWidth
                                         id="nom"
                                         onChange={(event) => {
-                                            createNom(event.target.value)
+                                            createNom(event.target.value);
                                         }}
+                                        placeholder="Nom"
                                         aria-describedby="nom"
-                                        placeholder={"nom"}
                                         inputProps={{
-                                            'aria-label': 'weight',
+                                            'aria-label': 'Nom',
                                         }}
+                                        sx={{ backgroundColor: 'white', height: '40px' }}
                                     />
                                 </FormControl>
                             </Grid>
-                            <Grid item xs={3}>
-                                <FormControl sx={{m: 1, width: '30ch'}} variant="outlined">
+                            <Grid item xs={12} sm={6} md={3}>
+                                <FormControl fullWidth variant="outlined">
                                     <OutlinedInput
-                                        sx={{height: '5ch', boxShadow: 3, borderRadius: 2,backgroundColor:"white"}}
-                                        id="Prenom"
+                                        fullWidth
+                                        id="prenom"
                                         onChange={(event) => {
-                                            createPrenom(event.target.value)
+                                            createPrenom(event.target.value);
                                         }}
-                                        placeholder={"prenom"}
+                                        placeholder="Prénom"
                                         aria-describedby="prenom"
                                         inputProps={{
-                                            'aria-label': 'weight',
+                                            'aria-label': 'Prénom',
                                         }}
+                                        sx={{ backgroundColor: 'white', height: '40px' }}
                                     />
                                 </FormControl>
                             </Grid>
-                            <Grid item xs={3}>
-                                <FormControl sx={{m: 1, width: '30ch'}} variant="outlined">
+                            <Grid item xs={12} sm={6} md={3}>
+                                <FormControl fullWidth variant="outlined">
                                     <OutlinedInput
-                                        sx={{height: '5ch', boxShadow: 3, borderRadius: 2,backgroundColor:"white"}}
-                                        id="Adresse"
+                                        fullWidth
+                                        id="adresse"
                                         onChange={(event) => {
-                                            createAdresse(event.target.value)
+                                            createAdresse(event.target.value);
                                         }}
-                                        placeholder={"Adresse"}
-                                        aria-describedby="Adresse"
+                                        placeholder="Adresse"
+                                        aria-describedby="adresse"
                                         inputProps={{
-                                            'aria-label': 'weight',
+                                            'aria-label': 'Adresse',
                                         }}
+                                        sx={{ backgroundColor: 'white', height: '40px' }}
                                     />
                                 </FormControl>
                             </Grid>
-                            <Grid item xs={3}>
-                                <FormControl sx={{m: 1, width: '30ch'}} variant="outlined">
+                            <Grid item xs={12} sm={6} md={3}>
+                                <FormControl fullWidth variant="outlined">
                                     <OutlinedInput
-                                        sx={{height: '5ch', boxShadow: 3, borderRadius: 2,backgroundColor:"white"}}
-                                        id="Payer"
+                                        fullWidth
+                                        id="dimunie"
                                         onChange={(event) => {
-                                            createPayer(event.target.value)
+                                            createDimunie(event.target.value);
                                         }}
-                                        placeholder={"Somme Payer"}
-                                        aria-describedby="Payer"
+                                        placeholder="Réduction"
+                                        aria-describedby="dimunie"
                                         inputProps={{
-                                            'aria-label': 'weight',
+                                            'aria-label': 'Réduction',
                                         }}
+                                        sx={{ backgroundColor: 'white', height: '40px' }}
                                     />
                                 </FormControl>
                             </Grid>
-                            <Grid item xs={3} display="flex"
-                                  justifyContent="center"
-                                  alignItems="center" >
-
-                                <Button onClick={onSubmit} variant={"contained"} sx={{fontSize:20}} startIcon={<BeenhereIcon/>}>Reserver</Button>
+                            <Grid item xs={12} sm={6} md={3}>
+                                <FormControl fullWidth variant="outlined">
+                                    <OutlinedInput
+                                        fullWidth
+                                        id="payer"
+                                        onChange={(event) => {
+                                            createPayer(event.target.value);
+                                        }}
+                                        placeholder="Somme payée"
+                                        aria-describedby="payer"
+                                        inputProps={{
+                                            'aria-label': 'Somme payée',
+                                        }}
+                                        sx={{ backgroundColor: 'white', height: '40px' }}
+                                    />
+                                </FormControl>
                             </Grid>
-
+                            <Grid item xs={12} sm={6} md={3}>
+                                <Button
+                                    onClick={onSubmit}
+                                    variant="contained"
+                                    sx={{ fontSize: 20 }}
+                                    startIcon={<BeenhereIcon />}
+                                    fullWidth
+                                >
+                                    Réserver
+                                </Button>
+                            </Grid>
                         </Grid>
-                        <Grid container rowSpacing={1} columnSpacing={{xs: 1, sm: 2, md: 3}}>
-                            <Grid item xs={9}>
-                                <Box display="flex"
-                                     justifyContent="center"
-                                     alignItems="center" sx={{fontSize: 20,color:"white"}}>Information Clients</Box>
+                        <Grid container spacing={1}>
+                            <Grid item xs={12}>
+                                <Box
+                                    display="flex"
+                                    justifyContent="center"
+                                    alignItems="center"
+                                    sx={{ fontSize: 20, color: 'white', backgroundColor: 'grey' }}
+                                >
+                                    Informations Clients
+                                </Box>
                             </Grid>
                         </Grid>
                     </>

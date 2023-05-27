@@ -93,6 +93,7 @@ export default function Vente() {
     const [nom, createNom] = useState("")
     const [prenom, createPrenom] = useState("")
     const [adresse, createAdresse] = useState("")
+    const [dimunie, createDimunie] = useState(0)
     const [errorForm, setErrorForm] = useState(false)
     const onSubmit = async (e) => {
         e.preventDefault()
@@ -106,6 +107,7 @@ export default function Vente() {
                 "nom": nom,
                 "prenom": prenom,
                 "adresse": adresse,
+                "dimunie": dimunie,
                 "contenue": items,
                 "user_id": 1
             }
@@ -329,63 +331,93 @@ export default function Vente() {
                         </TableContainer>
                 {!isEmpty ?
                     <>
-                        <Grid container rowSpacing={1} columnSpacing={{xs: 1, sm: 2, md: 3}}>
-                            <Grid item xs={3}>
-                                <FormControl sx={{m: 1, width: '20ch'}} variant="filled">
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} sm={6}>
+                                    <FormControl fullWidth variant="filled" sx={{ width: '100%' }}>
                                     <OutlinedInput
-                                        sx={{height: '5ch', width: '30ch', boxShadow: 3, borderRadius: 2,backgroundColor:"white"}}
+                                        fullWidth
                                         id="nom"
                                         onChange={(event) => {
-                                            createNom(event.target.value)
+                                            createNom(event.target.value);
                                         }}
+                                        placeholder="Nom"
                                         aria-describedby="nom"
-                                        placeholder={"nom"}
                                         inputProps={{
-                                            'aria-label': 'weight',
+                                            'aria-label': 'Nom',
+
                                         }}
+                                        sx={{ backgroundColor: 'white', height: '40px' }}
                                     />
                                 </FormControl>
                             </Grid>
-                            <Grid item xs={3}>
-                                <FormControl sx={{m: 1, width: '30ch'}} variant="outlined">
+                            <Grid item xs={12} sm={6}>
+                                    <FormControl fullWidth variant="filled" sx={{ width: '100%' }}>
                                     <OutlinedInput
-                                        sx={{height: '5ch', boxShadow: 3, borderRadius: 2,backgroundColor:"white"}}
-                                        id="Prenom"
+                                        fullWidth
+                                        id="prenom"
                                         onChange={(event) => {
-                                            createPrenom(event.target.value)
+                                            createPrenom(event.target.value);
                                         }}
-                                        placeholder={"prenom"}
+                                        placeholder="Prénom"
                                         aria-describedby="prenom"
                                         inputProps={{
-                                            'aria-label': 'weight',
+                                            'aria-label': 'Prénom',
+
                                         }}
+                                        sx={{ backgroundColor: 'white', height: '40px' }}
                                     />
                                 </FormControl>
                             </Grid>
-                            <Grid item xs={3}>
-                                <FormControl sx={{m: 1, width: '30ch'}} variant="outlined">
+                            <Grid item xs={12} sm={6}>
+                                    <FormControl fullWidth variant="filled" sx={{ width: '100%' }}>
                                     <OutlinedInput
-                                        sx={{height: '5ch', boxShadow: 3, borderRadius: 2,backgroundColor:"white"}}
-                                        id="Adresse"
+                                        fullWidth
+                                        id="adresse"
                                         onChange={(event) => {
-                                            createAdresse(event.target.value)
+                                            createAdresse(event.target.value);
                                         }}
-                                        placeholder={"Adresse"}
-                                        aria-describedby="Adresse"
+                                        placeholder="Adresse"
+                                        aria-describedby="adresse"
                                         inputProps={{
-                                            'aria-label': 'weight',
+                                            'aria-label': 'Adresse',
+
                                         }}
+                                        sx={{ backgroundColor: 'white', height: '40px' }}
                                     />
                                 </FormControl>
                             </Grid>
-                            <Grid item xs={3} display="flex"
-                                  justifyContent="center"
-                                  alignItems="center" >
+                            <Grid item xs={12} sm={6}>
+                                    <FormControl fullWidth variant="filled" sx={{ width: '100%' }}>
+                                    <OutlinedInput
+                                        fullWidth
+                                        id="dimunie"
+                                        onChange={(event) => {
+                                            createDimunie(event.target.value);
+                                        }}
+                                        placeholder="Reduction"
+                                        aria-describedby="dimunie"
+                                        inputProps={{
+                                            'aria-label': 'Dimunie',
 
-                                <Button onClick={onSubmit} variant={"contained"} sx={{fontSize:20}} startIcon={<BeenhereIcon/>}>Vendue</Button>
+                                        }}
+                                        sx={{ backgroundColor: 'white', height: '40px' }}
+                                    />
+                                </FormControl>
                             </Grid>
-
+                            <Grid item xs={12} sm={6} md={3}>
+                                <Button
+                                    onClick={onSubmit}
+                                    variant="contained"
+                                    color="primary"
+                                    fullWidth
+                                    startIcon={<BeenhereIcon />}
+                                    sx={{ fontSize: 16 }}
+                                >
+                                    Vendue
+                                </Button>
+                            </Grid>
                         </Grid>
+
                         <Grid container rowSpacing={1} columnSpacing={{xs: 1, sm: 2, md: 3}}>
                             <Grid item xs={9}>
                                 <Box display="flex"

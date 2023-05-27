@@ -8,7 +8,9 @@ module.exports = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'mouhtada.allcine227.com',
+        hostname: 'mouhtada.ptr-niger.com',
+        // hostname: '127.0.0.1',
+        // port:'8000',
         pathname: '/storage/**',
       },
     ],

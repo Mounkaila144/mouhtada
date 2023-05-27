@@ -92,6 +92,13 @@ const headCells = [
         disablePadding: false,
         label: "Adresse",
     },
+    {
+        id: 'reduction',
+        numeric: true,
+        disablePadding: false,
+        label: "Reduction",
+    },
+
      {
         id: 'vendue',
         numeric: true,
@@ -343,13 +350,9 @@ export default function FactureTable({rows}) {
             <Box sx={{margin: 1, boxShadow: 2}}>
                 <Paper sx={{width: '100%', mb: 2}}>
                     <EnhancedTableToolbar numSelected={selected}/>
-                    <TableContainer>
+                    <TableContainer component={Paper} sx={{ maxWidth: '100%', overflowX: 'auto' }}>
+                        <Table size={dense ? 'small' : 'medium'}>
 
-                        <Table
-                            sx={{minWidth: 950}}
-                            aria-labelledby="tableTitle"
-                            size={dense ? 'small' : 'medium'}
-                        >
                             <EnhancedTableHead
                                 numSelected={selected.length}
                                 order={order}
@@ -391,6 +394,7 @@ export default function FactureTable({rows}) {
                                                     {row.prenom}
                                                 </TableCell>
                                                 <TableCell >{row.adresse}</TableCell>
+                                                <TableCell >{row.dimunie} CFA</TableCell>
                                                 <TableCell >{shortDate}</TableCell>
                                                 <TableCell>
                                                             <Button variant={"contained"}

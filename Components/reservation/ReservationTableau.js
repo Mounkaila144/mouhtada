@@ -94,6 +94,13 @@ const headCells = [
         disablePadding: false,
         label: "Adresse",
     },
+     {
+        id: 'ff',
+        numeric: true,
+        disablePadding: false,
+        label: "Reduction",
+    },
+
     {
         id: 'vendue',
         numeric: true,
@@ -374,13 +381,8 @@ export default function ReservationTable({rows}) {
             <Box sx={{margin: 1, boxShadow: 2}}>
                 <Paper sx={{width: '100%', mb: 2}}>
                     <EnhancedTableToolbar numSelected={selected}/>
-                    <TableContainer>
-
-                        <Table
-                            sx={{minWidth: 950}}
-                            aria-labelledby="tableTitle"
-                            size={dense ? 'small' : 'medium'}
-                        >
+                    <TableContainer component={Paper} sx={{ maxWidth: '100%', overflowX: 'auto' }}>
+                        <Table size={dense ? 'small' : 'medium'}>
                             <EnhancedTableHead
                                 numSelected={selected.length}
                                 order={order}
@@ -428,6 +430,7 @@ export default function ReservationTable({rows}) {
                                                     {row.prenom}
                                                 </TableCell>
                                                 <TableCell >{row.adresse}</TableCell>
+                                                <TableCell >{row.dimunie} CFA</TableCell>
                                                 <TableCell >{shortDate}</TableCell>
                                                 <TableCell >
                                                     <Button variant={"contained"}
