@@ -25,6 +25,7 @@ function Dashboard() {
         return price.toLocaleString('fr-FR', {style: 'currency', currency: 'CFA'}).replace(',00', '');
     }
 
+
     useEffect(() => {
         async function fetchData() {
             await MyRequest('dahboard', 'GET', {}, { 'Content-Type': 'application/json' })
@@ -93,6 +94,7 @@ function Dashboard() {
                                         marginTop: -5
                                     }}/>} text={"Nombre d'article"} number={data.TotalArticle}/>
                                 </Grid>
+                                {user===2?<>
                                 <Grid item xs={4}><ItemCard icon={<PaidIcon sx={{
                                     fontSize: 60,
                                     color: "white",
@@ -109,7 +111,8 @@ function Dashboard() {
                                     boxShadow: 3,
                                     marginTop: -5
                                 }}/>} text={"Benefice Mensuelle"} number={Cfa(data.beneficeMoi)}/></Grid>
-                                <Grid item xs={4}><ItemCard icon={<CategoryIcon sx={{
+                                </>:null}
+                                    <Grid item xs={4}><ItemCard icon={<CategoryIcon sx={{
                                     fontSize: 60,
                                     color: "white",
                                     backgroundColor: blueGrey[900],

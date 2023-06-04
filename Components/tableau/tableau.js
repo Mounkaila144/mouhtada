@@ -121,12 +121,7 @@ const headCells2 = [
         disablePadding: false,
         label: 'Nom',
     },
-    {
-        id: 'carbs',
-        numeric: true,
-        disablePadding: false,
-        label: "Prix d'Achat",
-    },
+
     {
         id: 'protein',
         numeric: true,
