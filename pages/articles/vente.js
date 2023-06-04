@@ -93,6 +93,7 @@ export default function Vente() {
     const [nom, createNom] = useState("")
     const [prenom, createPrenom] = useState("")
     const [adresse, createAdresse] = useState("")
+    const [numero, createNumero] = useState("")
     const [dimunie, createDimunie] = useState(0)
     const [errorForm, setErrorForm] = useState(false)
     const onSubmit = async (e) => {
@@ -107,6 +108,7 @@ export default function Vente() {
                 "nom": nom,
                 "prenom": prenom,
                 "adresse": adresse,
+                "numero": numero,
                 "dimunie": dimunie,
                 "contenue": items,
                 "user_id": 1
@@ -380,6 +382,24 @@ export default function Vente() {
                                         aria-describedby="adresse"
                                         inputProps={{
                                             'aria-label': 'Adresse',
+
+                                        }}
+                                        sx={{ backgroundColor: 'white', height: '40px' }}
+                                    />
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={12} sm={6}>
+                                    <FormControl fullWidth variant="filled" sx={{ width: '100%' }}>
+                                    <OutlinedInput
+                                        fullWidth
+                                        id="numero"
+                                        onChange={(event) => {
+                                            createNumero(event.target.value);
+                                        }}
+                                        placeholder="Numero"
+                                        aria-describedby="numero"
+                                        inputProps={{
+                                            'aria-label': 'Numero',
 
                                         }}
                                         sx={{ backgroundColor: 'white', height: '40px' }}

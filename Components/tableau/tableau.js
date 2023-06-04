@@ -108,6 +108,45 @@ const headCells = [
 
 
 ];
+const headCells2 = [
+    {
+        id: 'name',
+        numeric: true,
+        disablePadding: true,
+        label: 'Image',
+    },
+    {
+        id: 'calories',
+        numeric: true,
+        disablePadding: false,
+        label: 'Nom',
+    },
+    {
+        id: 'carbs',
+        numeric: true,
+        disablePadding: false,
+        label: "Prix d'Achat",
+    },
+    {
+        id: 'protein',
+        numeric: true,
+        disablePadding: false,
+        label: "Prix de vente",
+    },
+     {
+        id: 'vendue',
+        numeric: true,
+        disablePadding: false,
+        label: "Nombre vendue",
+    }, {
+        id: 'restant',
+        numeric: true,
+        disablePadding: false,
+        label: "Restant",
+    },
+
+
+];
 
 function EnhancedTableHead(props) {
     const { onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort } =
@@ -133,7 +172,7 @@ function EnhancedTableHead(props) {
                         }}
                     />
                 </TableCell>:null}
-                {headCells.map((headCell) => (
+                {user===2? headCells.map((headCell) => (
                     <TableCell
                         key={headCell.id}
                         align={headCell.numeric ? 'right' : 'left'}
@@ -153,7 +192,27 @@ function EnhancedTableHead(props) {
                             ) : null}
                         </TableSortLabel>
                     </TableCell>
-                ))}
+                )) : headCells2.map((headCell) => (
+                    <TableCell
+                        key={headCell.id}
+                        align={headCell.numeric ? 'right' : 'left'}
+                        padding={headCell.disablePadding ? 'none' : 'normal'}
+                        sortDirection={orderBy === headCell.id ? order : false}
+                    >
+                        <TableSortLabel
+                            active={orderBy === headCell.id}
+                            direction={orderBy === headCell.id ? order : 'desc'}
+                            onClick={createSortHandler(headCell.id)}
+                        >
+                            {headCell.label}
+                            {orderBy === headCell.id ? (
+                                <Box component="span" sx={visuallyHidden}>
+                                    {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                                </Box>
+                            ) : null}
+                        </TableSortLabel>
+                    </TableCell>
+                )) }
 
                 {user===2?
                     <TableCell> </TableCell>:null
@@ -431,7 +490,7 @@ export default function EnhancedTable({rows,id}) {
                                                 <TableCell align="right">
                                                     {row.prixAchat} CFA
                                                 </TableCell>
-                                                <TableCell align="right">{row.prixVente} CFA</TableCell>
+                                                {user===2?<TableCell align="right">{row.prixVente} CFA</TableCell>:null}
                                                 <TableCell align="right">{row.vendue}</TableCell>
                                                 <TableCell align="right">{row.stock}</TableCell>
                                                 {user===2?

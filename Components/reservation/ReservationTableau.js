@@ -95,6 +95,13 @@ const headCells = [
         label: "Adresse",
     },
      {
+        id: 'numero',
+        numeric: true,
+        disablePadding: false,
+        label: "Numero",
+    },
+
+     {
         id: 'ff',
         numeric: true,
         disablePadding: false,
@@ -408,7 +415,7 @@ export default function ReservationTable({rows}) {
                                             total=total+value["itemTotal"]
 
                                         })
-                                        const rest=total-row.payer
+                                        const rest=total-row.payer-row.dimunie
                                         return (
                                             <TableRow
                                                 hover
@@ -430,6 +437,7 @@ export default function ReservationTable({rows}) {
                                                     {row.prenom}
                                                 </TableCell>
                                                 <TableCell >{row.adresse}</TableCell>
+                                                <TableCell >{row.numero}</TableCell>
                                                 <TableCell >{row.dimunie} CFA</TableCell>
                                                 <TableCell >{shortDate}</TableCell>
                                                 <TableCell >
@@ -442,7 +450,7 @@ export default function ReservationTable({rows}) {
                                                     <AddPayement id={row.id}/>
                                                 </TableCell>
                                                 <TableCell>
-                                                    <DialogReservation contenue={contenue} total={total} payer={row.payer} rest={rest}/>
+                                                    <DialogReservation contenue={contenue} total={total} payer={row.payer} rest={rest} dimunie={row.dimunie}/>
 
                                                 </TableCell>
                                             </TableRow>

@@ -253,7 +253,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function DialogReservation({contenue,total,payer,rest}) {
+export default function DialogReservation({contenue,total,payer,rest,dimunie}) {
     const [dialog, setDialog] = React.useState(false);
     const handleClickOpen = () => {
         setDialog(true);
@@ -311,16 +311,10 @@ export default function DialogReservation({contenue,total,payer,rest}) {
                             </TableRow>
                         );
                     })}
-                                <TableRow
-                                    sx={{'&:last-child td, &:last-child th': {border: 0}}}
-                                >
-                                    <TableCell></TableCell>
-                                    <TableCell></TableCell>
-                                    <TableCell align={"right"}><Box sx={{fontFamily:"bold",fontSize:20}}>Total =</Box></TableCell>
-                                    <TableCell><Box sx={{fontFamily:"bold",fontSize:20}}>{Cfa(total)} CFA</Box></TableCell>
-                                </TableRow>
                             </TableBody>
                         </Table>
+                        <Box sx={{fontFamily:"bold",fontSize:20}}>Total <span style={{color:"blue"}}> {Cfa(total)}</span> , Reduction <span style={{color:"red"}}>{Cfa(dimunie)}</span></Box>
+
                         <Box sx={{fontFamily:"bold",fontSize:20}}>le client a donné <span style={{color:"blue"}}> {Cfa(parseInt(payer))}</span>  et il lui rest a payer <span style={{color:"red"}}>{Cfa(rest)}</span></Box>
 
                     </TableContainer>

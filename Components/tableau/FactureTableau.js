@@ -92,6 +92,13 @@ const headCells = [
         disablePadding: false,
         label: "Adresse",
     },
+     {
+        id: 'numero',
+        numeric: true,
+        disablePadding: false,
+        label: "Numero",
+    },
+
     {
         id: 'reduction',
         numeric: true,
@@ -394,6 +401,7 @@ export default function FactureTable({rows}) {
                                                     {row.prenom}
                                                 </TableCell>
                                                 <TableCell >{row.adresse}</TableCell>
+                                                <TableCell >{row.numero}</TableCell>
                                                 <TableCell >{row.dimunie} CFA</TableCell>
                                                 <TableCell >{shortDate}</TableCell>
                                                 <TableCell>

@@ -96,6 +96,7 @@ export default function Reservation() {
     const [prenom, createPrenom] = useState("")
     const [payer, createPayer] = useState(0)
     const [adresse, createAdresse] = useState("")
+    const [numero, createNumero] = useState("")
     const [dimunie, createDimunie] = useState(0)
     const [errorForm, setErrorForm] = useState(false)
     const onSubmit = async (e) => {
@@ -111,6 +112,7 @@ export default function Reservation() {
                 "prenom": prenom,
                 "payer": payer,
                 "adresse": adresse,
+                "numero": numero,
                 "dimunie": dimunie,
                 "contenue": items,
                 "user_id": 1
@@ -383,6 +385,23 @@ export default function Reservation() {
                                         aria-describedby="adresse"
                                         inputProps={{
                                             'aria-label': 'Adresse',
+                                        }}
+                                        sx={{ backgroundColor: 'white', height: '40px' }}
+                                    />
+                                </FormControl>
+                            </Grid>
+                            <Grid item xs={12} sm={6} md={3}>
+                                <FormControl fullWidth variant="outlined">
+                                    <OutlinedInput
+                                        fullWidth
+                                        id="numero"
+                                        onChange={(event) => {
+                                            createNumero(event.target.value);
+                                        }}
+                                        placeholder="Numero"
+                                        aria-describedby="numero"
+                                        inputProps={{
+                                            'aria-label': 'Numero',
                                         }}
                                         sx={{ backgroundColor: 'white', height: '40px' }}
                                     />
